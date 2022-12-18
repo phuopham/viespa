@@ -1,70 +1,61 @@
 package com.spa.viespa.entities;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.time.ZonedDateTime;
+
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@ToString
 
 @Entity
 @Table
 public class Staff {
     @Id
-//    @SequenceGenerator(
-//            name="staff_sequence",
-//            sequenceName="staff_sequence",
-//            allocationSize = 1
-//    )
     @GeneratedValue(
-            strategy = GenerationType.SEQUENCE
-//            generator = "student_sequence"
+            strategy = GenerationType.AUTO
     )
     private Long id;
     private String name;
     private LocalDate dob;
+    private String address;
+    private String phone;
+    private String email;
     private Long idNo;
+    private LocalDate joinDate;
+    private LocalDate endDate;
 
-    public Staff() {
-    }
+    @CreationTimestamp
+    private ZonedDateTime createAt;
 
-    @Override
-    public String toString() {
-        return "Staff{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", dob=" + dob +
-                ", idNo=" + idNo +
-                '}';
-    }
+    @UpdateTimestamp
+    private ZonedDateTime updateAt;
 
-    public Long getId() {
-        return id;
-    }
-
-    public Staff( String name, LocalDate dob, Long idNo) {
+    public Staff(String name,
+                 LocalDate dob,
+                 String address,
+                 String phone,
+                 String email,
+                 Long idNo,
+                 LocalDate joinDate,
+                 LocalDate endDate) {
         this.name = name;
         this.dob = dob;
+        this.address = address;
+        this.phone = phone;
+        this.email = email;
         this.idNo = idNo;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public LocalDate getDob() {
-        return dob;
-    }
-
-    public void setDob(LocalDate dob) {
-        this.dob = dob;
-    }
-
-    public Long getIdNo() {
-        return idNo;
-    }
-
-    public void setIdNo(Long idNo) {
-        this.idNo = idNo;
+        this.joinDate = joinDate;
+        this.endDate = endDate;
     }
 }
