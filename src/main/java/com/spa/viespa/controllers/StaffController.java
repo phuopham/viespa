@@ -38,12 +38,13 @@ public class StaffController {
     public void updateStaff(
             @PathVariable("staffId") Long id,
             @RequestParam(required = false) String name,
-            @RequestParam(required = false) LocalDate dob,
-            @RequestParam(required = false) String address,
-            @RequestParam(required = false) String phone,
-            @RequestParam(required = false) String email,
-            @RequestParam(required = false) LocalDate joinDate,
-            @RequestParam(required = false) LocalDate endDate) {
-        staffService.updateStaff(id, name, dob, address, phone, email, joinDate, endDate);
+//            @RequestParam(required = false) LocalDate dob,
+//            @RequestParam(required = false) String address,
+//            @RequestParam(required = false) String phone,
+            @RequestParam(required = false) String email
+//            @RequestParam(required = false) LocalDate joinDate,
+//            @RequestParam(required = false) LocalDate endDate
+    ) {
+        staffService.updateStaff(id, name, null, null, null, email, null, null);
     }
 }
