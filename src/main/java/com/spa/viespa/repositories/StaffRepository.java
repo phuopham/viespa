@@ -1,5 +1,6 @@
-package com.spa.viespa.staff;
+package com.spa.viespa.repositories;
 
+import com.spa.viespa.entities.Staff;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;

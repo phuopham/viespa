@@ -1,4 +1,4 @@
-package com.spa.viespa.staff;
+package com.spa.viespa.entities;
 
 import javax.persistence.*;
 import java.time.LocalDate;

@@ -1,5 +1,7 @@
-package com.spa.viespa.staff;
+package com.spa.viespa.services;
 
+import com.spa.viespa.entities.Staff;
+import com.spa.viespa.repositories.StaffRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

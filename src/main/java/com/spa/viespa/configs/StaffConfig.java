@@ -1,5 +1,7 @@
-package com.spa.viespa.staff;
+package com.spa.viespa.configs;
 
+import com.spa.viespa.entities.Staff;
+import com.spa.viespa.repositories.StaffRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
