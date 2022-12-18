@@ -19,8 +19,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import java.time.ZonedDateTime;
 
@@ -35,7 +33,8 @@ import java.time.ZonedDateTime;
 public class Skill {
     @Id
     @GeneratedValue (
-            strategy = GenerationType.AUTO
+            strategy = GenerationType.SEQUENCE,
+            generator = "skill_generator"
     )
     private Long id;
     private String name;
@@ -49,10 +48,6 @@ public class Skill {
 
     @UpdateTimestamp
     private ZonedDateTime updateAt;
-
-/*    @ManyToOne
-    @JoinColumn(name="id", nullable=false)
-    private Staff staff;*/
 
     public Skill(String name,
                  String desciption,

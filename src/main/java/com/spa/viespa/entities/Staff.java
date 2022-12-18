@@ -11,7 +11,6 @@ import org.hibernate.annotations.UpdateTimestamp;
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.ZonedDateTime;
-import java.util.Set;
 
 @Getter
 @Setter
@@ -24,7 +23,8 @@ import java.util.Set;
 public class Staff {
     @Id
     @GeneratedValue (
-            strategy = GenerationType.AUTO
+            strategy = GenerationType.SEQUENCE,
+            generator = "staff_generator"
     )
     private Long id;
     private String name;
@@ -41,9 +41,6 @@ public class Staff {
 
     @UpdateTimestamp
     private ZonedDateTime updateAt;
-
-    //@OneToMany(mappedBy="staff")
-    //private Set<Skill> skills;
 
     public Staff(String name,
                  LocalDate dob,
