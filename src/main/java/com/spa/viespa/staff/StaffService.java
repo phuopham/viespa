@@ -3,11 +3,9 @@ package com.spa.viespa.staff;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
-import static java.util.Calendar.JULY;
 
 @Service
 public class StaffService {
@@ -30,5 +28,15 @@ public class StaffService {
         }
         System.out.println(staff);
         staffRepository.save(staff);
+    }
+
+    public void deleteStaff(Long staffId) {
+        boolean exists = staffRepository.existsById(staffId);
+        if(!exists){
+            throw new IllegalStateException(
+                    "Staff with id " + staffId +" does not exist"
+            );
+        }
+        staffRepository.deleteById(staffId);
     }
 }
