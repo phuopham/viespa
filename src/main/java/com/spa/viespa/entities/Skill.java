@@ -37,7 +37,11 @@ public class Skill {
             generator = "skill_generator"
     )
     private Long id;
+
+    @Column(unique = true, nullable = false)
     private String name;
+
+    @Column(nullable = false)
     private String desciption;
 
     @Column(columnDefinition="tinyint(1) default 0")
