@@ -10,8 +10,6 @@ import java.time.LocalDate;
 import java.time.Month;
 import java.util.List;
 
-import static java.util.Calendar.JULY;
-
 @Configuration
 public class StaffConfig {
 
