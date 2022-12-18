@@ -63,6 +63,7 @@ public class StaffService {
         Staff staff = staffRepository
                 .findById(id)
                 .orElseThrow(() -> new IllegalStateException("Staff with ID: ["+ id +"] does not exist"));
+
         if(name != null && name.length() > 0 && !Objects.equals(staff.getName(), name)) {
             staff.setName(name);
         }

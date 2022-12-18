@@ -9,10 +9,14 @@ package com.spa.viespa.controllers;
 import com.spa.viespa.entities.Skill;
 import com.spa.viespa.services.SkillService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -36,4 +40,19 @@ public class SkillController {
     public void addNewSkill(@RequestBody Skill skill) {
         skillService.addNewSkill(skill);
     }
+
+    @DeleteMapping(path = "{skillId}")
+    public void deleteSkill(@PathVariable("skillId") Long id) {
+        skillService.deleteSkill(id);
+    }
+
+    @PutMapping(path = "{skillId}")
+    public void updateSkill(
+            @PathVariable("skillId") Long id,
+            @RequestParam(required = false) String name,
+            @RequestParam(required = false) String description,
+            @RequestParam(required = false) Integer status) {
+        skillService.updateSkill(id, name, description, status);
+    }
+
 }
