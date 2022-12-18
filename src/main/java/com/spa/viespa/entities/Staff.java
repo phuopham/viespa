@@ -11,6 +11,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.ZonedDateTime;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -22,7 +23,7 @@ import java.time.ZonedDateTime;
 @Table
 public class Staff {
     @Id
-    @GeneratedValue(
+    @GeneratedValue (
             strategy = GenerationType.AUTO
     )
     private Long id;
@@ -40,6 +41,9 @@ public class Staff {
 
     @UpdateTimestamp
     private ZonedDateTime updateAt;
+
+    //@OneToMany(mappedBy="staff")
+    //private Set<Skill> skills;
 
     public Staff(String name,
                  LocalDate dob,

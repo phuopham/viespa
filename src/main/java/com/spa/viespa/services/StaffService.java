@@ -4,6 +4,7 @@ import com.spa.viespa.entities.Staff;
 import com.spa.viespa.repositories.StaffRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -30,11 +31,12 @@ public class StaffService {
         if(dublicatedId.isPresent()){
             throw new IllegalStateException("ID: ["+ staff.getIdNo() +"] number existed!");
         }
-        Optional<Staff> duplicatedEmail = staffRepository.findStaffByEmail(staff.getEmail());
 
+        Optional<Staff> duplicatedEmail = staffRepository.findStaffByEmail(staff.getEmail());
         if(duplicatedEmail.isPresent()) {
             throw new IllegalStateException("This staff email is already existed");
         }
+
         System.out.println(staff);
         staffRepository.save(staff);
     }
@@ -49,6 +51,7 @@ public class StaffService {
         staffRepository.deleteById(id);
     }
 
+    @Transactional
     public void updateStaff(Long id,
                             String name,
                             LocalDate dob,
@@ -60,10 +63,7 @@ public class StaffService {
         Staff staff = staffRepository
                 .findById(id)
                 .orElseThrow(() -> new IllegalStateException("Staff with ID: ["+ id +"] does not exist"));
-        //System.out.println(staff.getId());
         if(name != null && name.length() > 0 && !Objects.equals(staff.getName(), name)) {
-            System.out.println(name);
-            System.out.println(staff.getName());
             staff.setName(name);
         }
 

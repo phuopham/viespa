@@ -14,7 +14,7 @@ import java.util.List;
 public class StaffConfig {
 
     @Bean
-    CommandLineRunner commandLineRunner(StaffRepository repository){
+    CommandLineRunner preDataStaff(StaffRepository repository){
         return args -> {
             Staff test1 = new Staff(
                     "Nguyen Hoang Nam",
