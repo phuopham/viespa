@@ -8,7 +8,6 @@ package com.spa.viespa.configs;
 
 import com.spa.viespa.entities.*;
 import com.spa.viespa.repositories.*;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -16,15 +15,19 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.time.LocalDate;
 import java.time.Month;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
 @Configuration
 public class ConfigDataTest {
     private final RoleRepository roleRepository;
+    private final UserRepository userRepository;
 
-    public ConfigDataTest(RoleRepository roleRepository) {
+    public ConfigDataTest(RoleRepository roleRepository,
+                          UserRepository userRepository) {
         this.roleRepository = roleRepository;
+        this.userRepository = userRepository;
     }
 
     @Bean
@@ -126,7 +129,19 @@ public class ConfigDataTest {
             Role role3 = new Role(ERole.ROLE_ADMIN);
             roleRepository.saveAll((List.of(role1,role2,role3)));
             //----------------------------------------------
-            
+
+            //Add User-Admin
+            User user = new User(
+                    "admin",
+                    "admin@gmail.com",
+                    "$2a$10$V56btnULgW8Vz0b.7AjPWOgFaPURmjRD7Wa61MRnuTFCYQFNsV4Aq"
+            );
+            Set<Role> roles = new HashSet<>();
+            Role adminRole = roleRepository.findByName(ERole.ROLE_ADMIN)
+                    .orElseThrow(() -> new RuntimeException("Error"));
+            roles.add(adminRole);
+            user.setRoles(roles);
+            userRepository.save(user);
         };
 
     }
