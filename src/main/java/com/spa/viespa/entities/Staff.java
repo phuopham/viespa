@@ -23,16 +23,32 @@ import java.time.ZonedDateTime;
 public class Staff {
     @Id
     @GeneratedValue(
-            strategy = GenerationType.AUTO
+            strategy = GenerationType.SEQUENCE,
+            generator = "staff_generator"
     )
     private Long id;
+
+    @Column(nullable = false)
     private String name;
+
+    @Column(nullable = false)
     private LocalDate dob;
+
+    @Column(nullable = false)
     private String address;
+
+    @Column(nullable = false)
     private String phone;
+
+    @Column(unique = true, nullable = false)
     private String email;
+
+    @Column(nullable = false)
     private Long idNo;
+
+    @Column(nullable = false)
     private LocalDate joinDate;
+
     private LocalDate endDate;
 
     @CreationTimestamp
