@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.time.LocalDate;
-import java.util.List;
 
 @RestController
 @RequestMapping(path="api/v1/staffs")
@@ -21,7 +20,7 @@ public class StaffController {
     }
 
     @GetMapping
-    public List<Staff> getStaffs(){
+    public ResponseEntity<ResponseObject> getStaffs(){
         return staffService.getStaffs();
     }
 
@@ -31,12 +30,12 @@ public class StaffController {
     }
 
     @DeleteMapping(path = "{staffId}")
-    public void deleteStaff(@PathVariable("staffId") Long id) {
-        staffService.deleteStaff(id);
+    public ResponseEntity<ResponseObject> deleteStaff(@PathVariable("staffId") Long id) {
+        return staffService.deleteStaff(id);
     }
 
     @PutMapping(path = "{staffId}")
-    public void updateStaff(
+    public ResponseEntity<ResponseObject> updateStaff(
             @PathVariable("staffId") Long id,
             @RequestParam(required = false) String name,
             @RequestParam(required = false) LocalDate dob,
@@ -46,6 +45,6 @@ public class StaffController {
             @RequestParam(required = false) LocalDate joinDate,
             @RequestParam(required = false) LocalDate endDate
     ) {
-        staffService.updateStaff(id, name, dob, address, phone, email, joinDate, endDate);
+        return staffService.updateStaff(id, name, dob, address, phone, email, joinDate, endDate);
     }
 }
