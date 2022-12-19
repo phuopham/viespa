@@ -1,7 +1,7 @@
 /**
- * Author: ng-hoangnam
- * Date: 19/12/2022
- * Description:
+ * Author: Aptech - Team 1 - Project Semester 2
+ * Date: 18/12/2022
+ * Description: VieSpa Management Project
  */
 
 package com.spa.viespa.services;

@@ -7,8 +7,10 @@
 package com.spa.viespa.controllers;
 
 import com.spa.viespa.entities.Skill;
+import com.spa.viespa.services.ResponseObject;
 import com.spa.viespa.services.SkillService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -18,8 +20,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.List;
 
 @RestController
 @RequestMapping(path = "api/v1/skills")
@@ -32,27 +32,27 @@ public class SkillController {
     }
 
     @GetMapping
-    public List<Skill> getSkills(){
+    public ResponseEntity<ResponseObject> getSkills(){
         return skillService.getSkills();
     }
 
     @PostMapping
-    public void addNewSkill(@RequestBody Skill skill) {
-        skillService.addNewSkill(skill);
+    public ResponseEntity<ResponseObject> addNewSkill(@RequestBody Skill skill) {
+        return skillService.addNewSkill(skill);
     }
 
     @DeleteMapping(path = "{skillId}")
-    public void deleteSkill(@PathVariable("skillId") Long id) {
-        skillService.deleteSkill(id);
+    public ResponseEntity<ResponseObject> deleteSkill(@PathVariable("skillId") Long id) {
+        return skillService.deleteSkill(id);
     }
 
     @PutMapping(path = "{skillId}")
-    public void updateSkill(
+    public ResponseEntity<ResponseObject> updateSkill(
             @PathVariable("skillId") Long id,
             @RequestParam(required = false) String name,
             @RequestParam(required = false) String description,
             @RequestParam(required = false) Integer status) {
-        skillService.updateSkill(id, name, description, status);
+        return skillService.updateSkill(id, name, description, status);
     }
 
 }
