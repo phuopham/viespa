@@ -6,6 +6,7 @@
 
 package com.spa.viespa.services;
 
+import com.spa.viespa.entities.ResponseObject;
 import com.spa.viespa.entities.Skill;
 import com.spa.viespa.repositories.SkillReponsitory;
 import org.springframework.beans.factory.annotation.Autowired;
