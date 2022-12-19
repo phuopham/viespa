@@ -6,17 +6,13 @@
 
 package com.spa.viespa.configs;
 
-import com.spa.viespa.entities.Course;
-import com.spa.viespa.entities.ServiceBundle;
-import com.spa.viespa.entities.Skill;
-import com.spa.viespa.entities.Staff;
-import com.spa.viespa.repositories.CourseRepository;
-import com.spa.viespa.repositories.ServiceBundleRepository;
-import com.spa.viespa.repositories.SkillRepository;
-import com.spa.viespa.repositories.StaffRepository;
+import com.spa.viespa.entities.*;
+import com.spa.viespa.repositories.*;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.time.LocalDate;
 import java.time.Month;
@@ -25,6 +21,12 @@ import java.util.Set;
 
 @Configuration
 public class ConfigDataTest {
+    private final RoleRepository roleRepository;
+
+    public ConfigDataTest(RoleRepository roleRepository) {
+        this.roleRepository = roleRepository;
+    }
+
     @Bean
     CommandLineRunner mappingDemo(
             SkillRepository skillRepository,
@@ -116,6 +118,16 @@ public class ConfigDataTest {
             );
 
             courseRepository.saveAll((List.of(course1, course2, course3)));
+            //----------------------------------------------
+
+            //Add Role Data Demo
+            Role role1 = new Role(ERole.ROLE_USER);
+            Role role2 = new Role(ERole.ROLE_MODERATOR);
+            Role role3 = new Role(ERole.ROLE_ADMIN);
+            roleRepository.saveAll((List.of(role1,role2,role3)));
+            //----------------------------------------------
+            
         };
+
     }
 }
