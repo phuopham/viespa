@@ -3,6 +3,8 @@ package com.spa.viespa.services;
 import com.spa.viespa.entities.Staff;
 import com.spa.viespa.repositories.StaffRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDate;
@@ -25,19 +27,29 @@ public class StaffService {
         return staffRepository.findAll();
     }
 
-    public void addNewStaff(Staff staff) {
-        Optional<Staff> dublicatedId = staffRepository.findStaffByIdNo(staff.getIdNo());
-        if(dublicatedId.isPresent()){
-            throw new IllegalStateException("ID: ["+ staff.getIdNo() +"] number existed!");
-        }
+    public ResponseEntity<ResponseObject> addNewStaff(Staff staff) {
+        //Check duplicated ID in table Staff
+        Optional<Staff> duplicatedId = staffRepository.findStaffByIdNo(staff.getIdNo());
 
+        //Check duplicated Email in table Staff
         Optional<Staff> duplicatedEmail = staffRepository.findStaffByEmail(staff.getEmail());
-        if(duplicatedEmail.isPresent()) {
-            throw new IllegalStateException("This staff email is already existed");
+
+        if(duplicatedId.isPresent()){
+            return ResponseEntity.status(HttpStatus.OK).body(
+                    new ResponseObject("error", "ID: ["+ staff.getIdNo() +"] number existed!", "")
+            );
         }
 
-        System.out.println(staff);
+        if(duplicatedEmail.isPresent()) {
+            return ResponseEntity.status(HttpStatus.OK).body(
+                    new ResponseObject("error", "This staff email is already existed", "")
+            );
+        }
+
         staffRepository.save(staff);
+        return ResponseEntity.status(HttpStatus.OK).body(
+                new ResponseObject("success", "Insert data successfully", staff)
+        );
     }
 
     public void deleteStaff(Long id) {

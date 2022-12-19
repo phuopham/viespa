@@ -25,26 +25,6 @@ public class ConfigDataTest {
             SkillReponsitory skillReponsitory,
             StaffRepository staffRepository){
         return args -> {
-            //Add Skill Data Demo
-            Skill skill1 = new Skill(
-                    "Level 1",
-                    "Require for beginner employee with working time period lower than 100 hours",
-                    0
-            );
-            Skill skill2 = new Skill(
-                    "Level 2",
-                    "Require for intermadiate employee with working time priod from 100 to 500 hours",
-                    0
-            );
-            Skill skill3 = new Skill(
-                    "Level 3",
-                    "Require for professional employee with working time priod from 500 to 2000 hours",
-                    0
-            );
-
-            skillReponsitory.saveAll(List.of(skill1, skill2, skill3));
-            //-------------------------------------------------
-
             //Add Staff Data Demo
             Staff staff1 = new Staff(
                     "Nguyen Hoang Nam",
@@ -66,9 +46,27 @@ public class ConfigDataTest {
                     LocalDate.of(2022, Month.OCTOBER, 30),
                     null
             );
-
             staffRepository.saveAll(List.of(staff1, staff2));
             //----------------------------------------------
+
+            //Add Skill Data Demo
+            Skill skill1 = new Skill(
+                    "Level 1",
+                    "Require for beginner employee with working time period lower than 100 hours",
+                    0
+            );
+            Skill skill2 = new Skill(
+                    "Level 2",
+                    "Require for intermadiate employee with working time priod from 100 to 500 hours",
+                    0
+            );
+            Skill skill3 = new Skill(
+                    "Level 3",
+                    "Require for professional employee with working time priod from 500 to 2000 hours",
+                    0
+            );
+            skillReponsitory.saveAll(List.of(skill1, skill2, skill3));
+            //-------------------------------------------------
         };
     }
 }
