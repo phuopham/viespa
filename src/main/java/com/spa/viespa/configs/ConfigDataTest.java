@@ -6,9 +6,11 @@
 
 package com.spa.viespa.configs;
 
+import com.spa.viespa.entities.ServiceBundle;
 import com.spa.viespa.entities.Skill;
 import com.spa.viespa.entities.Staff;
-import com.spa.viespa.repositories.SkillReponsitory;
+import com.spa.viespa.repositories.ServiceBundleRepository;
+import com.spa.viespa.repositories.SkillRepository;
 import com.spa.viespa.repositories.StaffRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
@@ -23,8 +25,9 @@ import java.util.Set;
 public class ConfigDataTest {
     @Bean
     CommandLineRunner mappingDemo(
-            SkillReponsitory skillReponsitory,
-            StaffRepository staffRepository){
+            SkillRepository skillRepository,
+            StaffRepository staffRepository,
+            ServiceBundleRepository serviceBundleRepository){
         return args -> {
             //Add Skill Data Demo
             Skill skill1 = new Skill(
@@ -39,7 +42,7 @@ public class ConfigDataTest {
                     "Level 3",
                     "Require for professional employee with working time priod from 500 to 2000 hours"
             );
-            skillReponsitory.saveAll(List.of(skill1, skill2, skill3));
+            skillRepository.saveAll(List.of(skill1, skill2, skill3));
             //-------------------------------------------------
 
             //Add Staff Data Demo
@@ -71,6 +74,27 @@ public class ConfigDataTest {
             ));
             staffRepository.saveAll(List.of(staff1, staff2));
             //----------------------------------------------
+
+            //Add Service Data Demo
+
+            ServiceBundle service1 = new ServiceBundle(
+                    "service1",
+                    "Description for service1"
+            );
+            service1.setSkills(Set.of(skill1,skill2));
+            ServiceBundle service2 = new ServiceBundle(
+                    "service2",
+                    "Description for service2"
+            );
+            service2.setSkills(Set.of(skill2, skill3));
+            ServiceBundle service3 = new ServiceBundle(
+                    "service3",
+                    "Description for service3"
+            );
+            service3.setSkills(Set.of(skill3));
+            
+            serviceBundleRepository.saveAll(List.of(service1,service2,service3));
+
         };
     }
 }

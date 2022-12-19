@@ -6,11 +6,7 @@
 
 package com.spa.viespa.entities;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -26,16 +22,16 @@ import java.util.Set;
 
 @Entity
 @Table
-public class Skill {
+public class ServiceBundle {
     @Id
     @SequenceGenerator(
-            name = "skill_sequence",
-            sequenceName = "skill_sequence",
+            name = "service_sequence",
+            sequenceName = "service_sequence",
             allocationSize = 1
     )
     @GeneratedValue (
             strategy = GenerationType.SEQUENCE,
-            generator = "skill_generator"
+            generator = "service_generator"
     )
     private Long id;
 
@@ -53,10 +49,16 @@ public class Skill {
     @UpdateTimestamp
     private ZonedDateTime updateAt;
 
+    @ManyToMany
+    @JoinTable(
+            name = "service_skills",
+            joinColumns = @JoinColumn(name = "service_id"),
+            inverseJoinColumns = @JoinColumn(name = "skill_id")
+    )
+    private Set<Skill> skills;
 
-
-    public Skill(String name,
-                 String description) {
+    public ServiceBundle(String name,
+                         String description) {
         this.name = name;
         this.description = description;
     }
