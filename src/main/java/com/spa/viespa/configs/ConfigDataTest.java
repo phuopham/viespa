@@ -57,9 +57,11 @@ public class ConfigDataTest {
                     "ng-hoangnam@github.com",
                     23432543524L,
                     LocalDate.of(2022, Month.DECEMBER, 2),
-                    null,
-                    Set.of(skill1, skill2)
+                    null
             );
+            staff1.setSkillSet(Set.of(
+                    skill1,skill2
+            ));
             Staff staff2 = new Staff(
                     "Phuo Pham",
                     LocalDate.of(1994, Month.JULY, 2),
@@ -68,9 +70,11 @@ public class ConfigDataTest {
                     "phuopham@github.com",
                     13432543832L,
                     LocalDate.of(2022, Month.OCTOBER, 30),
-                    null,
-                    Set.of(skill2, skill3)
+                    null
             );
+            staff2.setSkillSet(Set.of(
+                    skill2,skill3
+            ));
             staffRepository.saveAll(List.of(staff1, staff2));
         };
     }

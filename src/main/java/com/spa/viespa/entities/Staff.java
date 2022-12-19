@@ -78,7 +78,7 @@ public class Staff {
                  String email,
                  Long idNo,
                  LocalDate joinDate,
-                 LocalDate endDate, Set<Skill> skillSet) {
+                 LocalDate endDate) {
         this.name = name;
         this.dob = dob;
         this.address = address;
@@ -87,6 +87,5 @@ public class Staff {
         this.idNo = idNo;
         this.joinDate = joinDate;
         this.endDate = endDate;
-        this.skillSet = skillSet;
     }
 }
