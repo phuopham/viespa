@@ -21,23 +21,19 @@ public class User implements UserDetails {
             strategy = GenerationType.AUTO
     )
     private Long id;
-    private String name;
     private String username;
     private String email;
     private String password;
     @Enumerated(EnumType.STRING)
     private UserRoll userRoll;
-    private Boolean locked;
-    private Boolean enabled;
+    private Boolean locked = false;
+    private Boolean enabled = false;
 
-    public User(String name, String username, String email, String password, UserRoll userRoll, Boolean locked, Boolean enabled) {
-        this.name = name;
+    public User(String username, String email, String password, UserRoll userRoll) {
         this.username = username;
         this.email = email;
         this.password = password;
         this.userRoll = userRoll;
-        this.locked = locked;
-        this.enabled = enabled;
     }
 
     @Override
@@ -53,7 +49,7 @@ public class User implements UserDetails {
 
     @Override
     public String getUsername() {
-        return username;
+        return email;
     }
 
     @Override
