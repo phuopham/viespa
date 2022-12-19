@@ -19,6 +19,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import java.time.ZonedDateTime;
 
@@ -32,6 +33,11 @@ import java.time.ZonedDateTime;
 @Table
 public class Skill {
     @Id
+    @SequenceGenerator(
+            name = "skill_sequence",
+            sequenceName = "skill_sequence",
+            allocationSize = 1
+    )
     @GeneratedValue (
             strategy = GenerationType.SEQUENCE,
             generator = "skill_generator"
