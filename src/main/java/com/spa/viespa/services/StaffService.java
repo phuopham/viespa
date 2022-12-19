@@ -75,10 +75,10 @@ public class StaffService {
                     new ResponseObject("success", "Delete data successfully", "")
             );
         }
+
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(
                 new ResponseObject("error", "Staff with ID: [" + id + "] does not exist", "")
         );
-
     }
 
 
@@ -95,6 +95,14 @@ public class StaffService {
         Staff staff = staffRepository
                 .findById(id)
                 .orElseThrow(() -> new IllegalStateException("Staff with ID: [" + id + "] does not exist"));
+
+        Optional<Staff> duplicatedEmail = staffRepository.findStaffByEmail(email);
+
+        if (duplicatedEmail.isPresent()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(
+                    new ResponseObject("error", "This staff email is already existed", "")
+            );
+        }
 
         if (name != null && name.length() > 0 && !Objects.equals(staff.getName(), name)) {
             staff.setName(name);
@@ -113,13 +121,6 @@ public class StaffService {
         }
 
         if (email != null && email.length() > 0 && !Objects.equals(staff.getEmail(), email)) {
-            Optional<Staff> duplicatedEmail = staffRepository.findStaffByEmail(staff.getEmail());
-
-            if (duplicatedEmail.isPresent()) {
-                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(
-                        new ResponseObject("error", "This staff email is already existed", "")
-                );
-            }
             staff.setEmail(email);
         }
 
