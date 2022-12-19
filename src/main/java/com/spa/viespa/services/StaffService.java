@@ -50,17 +50,19 @@ public class StaffService {
 
     //Add New Staff
     public ResponseEntity<ResponseObject> addNewStaff(Staff staff) {
+        //Validate
+        if(staff.getName() == null) {
+            return responseError("INVALID DATA");
+        }
 
         //Check duplicated ID in table Staff
         Optional<Staff> duplicatedId = staffRepository.findStaffByIdNo(staff.getIdNo());
-
-        //Check duplicated Email in table Staff
-        Optional<Staff> duplicatedEmail = staffRepository.findStaffByEmail(staff.getEmail());
-
         if (duplicatedId.isPresent()) {
             return  responseError("ID: [" + staff.getIdNo() + "] number existed!");
         }
 
+        //Check duplicated Email in table Staff
+        Optional<Staff> duplicatedEmail = staffRepository.findStaffByEmail(staff.getEmail());
         if (duplicatedEmail.isPresent()) {
             return  responseError("This staff email is already existed");
         }

@@ -10,32 +10,35 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
 import java.time.ZonedDateTime;
-import java.util.Set;
 
-@Getter
 @Setter
+@Getter
 @AllArgsConstructor
 @NoArgsConstructor
-@ToString
 
 @Entity
 @Table
-public class Skill {
+public class Course {
     @Id
     @SequenceGenerator(
-            name = "skill_sequence",
-            sequenceName = "skill_sequence",
+            name = "course_sequence",
+            sequenceName = "course_sequence",
             allocationSize = 1
     )
-    @GeneratedValue (
+    @GeneratedValue(
             strategy = GenerationType.SEQUENCE,
-            generator = "skill_generator"
+            generator = "course_generator"
     )
     private Long id;
 
@@ -45,6 +48,9 @@ public class Skill {
     @Column(nullable = false)
     private String description;
 
+    @Column(nullable = false)
+    private Double price;
+
     private boolean active = true;
 
     @CreationTimestamp
@@ -53,11 +59,11 @@ public class Skill {
     @UpdateTimestamp
     private ZonedDateTime updateAt;
 
-
-
-    public Skill(String name,
-                 String description) {
+    public Course(String name,
+                  String description,
+                  Double price) {
         this.name = name;
         this.description = description;
+        this.price = price;
     }
 }

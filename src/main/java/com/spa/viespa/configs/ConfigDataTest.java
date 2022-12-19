@@ -6,9 +6,13 @@
 
 package com.spa.viespa.configs;
 
+import com.spa.viespa.entities.Course;
+import com.spa.viespa.entities.ServiceBundle;
 import com.spa.viespa.entities.Skill;
 import com.spa.viespa.entities.Staff;
-import com.spa.viespa.repositories.SkillReponsitory;
+import com.spa.viespa.repositories.CourseRepository;
+import com.spa.viespa.repositories.ServiceBundleRepository;
+import com.spa.viespa.repositories.SkillRepository;
 import com.spa.viespa.repositories.StaffRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
@@ -23,8 +27,10 @@ import java.util.Set;
 public class ConfigDataTest {
     @Bean
     CommandLineRunner mappingDemo(
-            SkillReponsitory skillReponsitory,
-            StaffRepository staffRepository){
+            SkillRepository skillRepository,
+            StaffRepository staffRepository,
+            ServiceBundleRepository serviceBundleRepository,
+            CourseRepository courseRepository){
         return args -> {
             //Add Skill Data Demo
             Skill skill1 = new Skill(
@@ -39,7 +45,7 @@ public class ConfigDataTest {
                     "Level 3",
                     "Require for professional employee with working time priod from 500 to 2000 hours"
             );
-            skillReponsitory.saveAll(List.of(skill1, skill2, skill3));
+            skillRepository.saveAll(List.of(skill1, skill2, skill3));
             //-------------------------------------------------
 
             //Add Staff Data Demo
@@ -53,7 +59,7 @@ public class ConfigDataTest {
                     LocalDate.of(2022, Month.DECEMBER, 2),
                     null
             );
-            staff1.setSkills(Set.of(
+            staff1.setJoinSkills(Set.of(
                     skill1,skill2
             ));
             Staff staff2 = new Staff(
@@ -66,11 +72,50 @@ public class ConfigDataTest {
                     LocalDate.of(2022, Month.OCTOBER, 30),
                     null
             );
-            staff2.setSkills(Set.of(
+            staff2.setJoinSkills(Set.of(
                     skill2,skill3
             ));
             staffRepository.saveAll(List.of(staff1, staff2));
             //----------------------------------------------
+
+            //Add Service Data Demo
+            ServiceBundle service1 = new ServiceBundle(
+                    "Service 1",
+                    "Description for Service 1"
+            );
+            service1.setJoinSkills(Set.of(skill1,skill2));
+            ServiceBundle service2 = new ServiceBundle(
+                    "Service 2",
+                    "Description for Service 2"
+            );
+            service2.setJoinSkills(Set.of(skill2, skill3));
+            ServiceBundle service3 = new ServiceBundle(
+                    "Service 3",
+                    "Description for Service 3"
+            );
+            service3.setJoinSkills(Set.of(skill3));
+            
+            serviceBundleRepository.saveAll(List.of(service1,service2,service3));
+            //----------------------------------------------
+
+            //Add Course Data Demo
+            Course course1 = new Course(
+                    "Course 1",
+                    "Description for Course 1",
+                    499.00
+            );
+            Course course2 = new Course(
+                    "Course 2",
+                    "Description for Course 2",
+                    699.00
+            );
+            Course course3 = new Course(
+                    "Course 3",
+                    "Description for Course 3",
+                    899.00
+            );
+
+            courseRepository.saveAll((List.of(course1, course2, course3)));
         };
     }
 }
