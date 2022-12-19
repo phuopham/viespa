@@ -11,6 +11,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.ZonedDateTime;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -62,6 +63,14 @@ public class Staff {
     @UpdateTimestamp
     private ZonedDateTime updateAt;
 
+    @ManyToMany
+    @JoinTable(
+            name = "staff_skills",
+            joinColumns = @JoinColumn(name = "staff_id"),
+            inverseJoinColumns = @JoinColumn(name = "skill_id")
+    )
+    private Set<Skill> skillSet;
+
     public Staff(String name,
                  LocalDate dob,
                  String address,
@@ -69,7 +78,7 @@ public class Staff {
                  String email,
                  Long idNo,
                  LocalDate joinDate,
-                 LocalDate endDate) {
+                 LocalDate endDate, Set<Skill> skillSet) {
         this.name = name;
         this.dob = dob;
         this.address = address;
@@ -78,5 +87,6 @@ public class Staff {
         this.idNo = idNo;
         this.joinDate = joinDate;
         this.endDate = endDate;
+        this.skillSet = skillSet;
     }
 }

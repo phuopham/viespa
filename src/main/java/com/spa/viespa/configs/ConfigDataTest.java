@@ -17,6 +17,7 @@ import org.springframework.context.annotation.Configuration;
 import java.time.LocalDate;
 import java.time.Month;
 import java.util.List;
+import java.util.Set;
 
 @Configuration
 public class ConfigDataTest {
@@ -25,28 +26,7 @@ public class ConfigDataTest {
             SkillReponsitory skillReponsitory,
             StaffRepository staffRepository){
         return args -> {
-            //Add Staff Data Demo
-            Staff staff1 = new Staff(
-                    "Nguyen Hoang Nam",
-                    LocalDate.of(1999, Month.JULY, 16),
-                    "146 Truong Dinh, Hai Ba Trung, Ha Noi",
-                    "0852470666",
-                    "ng-hoangnam@github.com",
-                    23432543524L,
-                    LocalDate.of(2022, Month.DECEMBER, 2),
-                    null
-            );
-            Staff staff2 = new Staff(
-                    "Phuo Pham",
-                    LocalDate.of(1994, Month.JULY, 2),
-                    "285 Doi Can, Hai Ba Trung, Ha Noi",
-                    "0988999666",
-                    "phuopham@github.com",
-                    13432543832L,
-                    LocalDate.of(2022, Month.OCTOBER, 30),
-                    null
-            );
-            staffRepository.saveAll(List.of(staff1, staff2));
+
             //----------------------------------------------
 
             //Add Skill Data Demo
@@ -67,6 +47,31 @@ public class ConfigDataTest {
             );
             skillReponsitory.saveAll(List.of(skill1, skill2, skill3));
             //-------------------------------------------------
+
+            //Add Staff Data Demo
+            Staff staff1 = new Staff(
+                    "Nguyen Hoang Nam",
+                    LocalDate.of(1999, Month.JULY, 16),
+                    "146 Truong Dinh, Hai Ba Trung, Ha Noi",
+                    "0852470666",
+                    "ng-hoangnam@github.com",
+                    23432543524L,
+                    LocalDate.of(2022, Month.DECEMBER, 2),
+                    null,
+                    Set.of(skill1, skill2)
+            );
+            Staff staff2 = new Staff(
+                    "Phuo Pham",
+                    LocalDate.of(1994, Month.JULY, 2),
+                    "285 Doi Can, Hai Ba Trung, Ha Noi",
+                    "0988999666",
+                    "phuopham@github.com",
+                    13432543832L,
+                    LocalDate.of(2022, Month.OCTOBER, 30),
+                    null,
+                    Set.of(skill2, skill3)
+            );
+            staffRepository.saveAll(List.of(staff1, staff2));
         };
     }
 }
