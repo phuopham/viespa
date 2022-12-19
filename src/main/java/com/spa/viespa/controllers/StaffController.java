@@ -1,7 +1,7 @@
 package com.spa.viespa.controllers;
 
 import com.spa.viespa.entities.Staff;
-import com.spa.viespa.services.ResponseObject;
+import com.spa.viespa.entities.ResponseObject;
 import com.spa.viespa.services.StaffService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

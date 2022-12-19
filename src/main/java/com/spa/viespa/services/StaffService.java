@@ -1,6 +1,9 @@
 package com.spa.viespa.services;
 
+import com.spa.viespa.entities.ResponseObject;
+import com.spa.viespa.entities.Skill;
 import com.spa.viespa.entities.Staff;
+import com.spa.viespa.repositories.SkillReponsitory;
 import com.spa.viespa.repositories.StaffRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

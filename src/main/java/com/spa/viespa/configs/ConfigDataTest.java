@@ -26,9 +26,6 @@ public class ConfigDataTest {
             SkillReponsitory skillReponsitory,
             StaffRepository staffRepository){
         return args -> {
-
-            //----------------------------------------------
-
             //Add Skill Data Demo
             Skill skill1 = new Skill(
                     "Level 1",
@@ -71,7 +68,9 @@ public class ConfigDataTest {
                     null,
                     Set.of(skill2, skill3)
             );
+
             staffRepository.saveAll(List.of(staff1, staff2));
+            //----------------------------------------------
         };
     }
 }

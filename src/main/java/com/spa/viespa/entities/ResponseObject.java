@@ -4,7 +4,7 @@
  * Description: VieSpa Management Project
  */
 
-package com.spa.viespa.services;
+package com.spa.viespa.entities;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
