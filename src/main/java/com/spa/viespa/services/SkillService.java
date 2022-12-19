@@ -95,8 +95,8 @@ public class SkillService {
             skill.setName(name);
         }
 
-        if(description != null && description.length() > 0 && !Objects.equals(skill.getDesciption(), name)) {
-            skill.setDesciption(description);
+        if(description != null && description.length() > 0 && !Objects.equals(skill.getDescription(), name)) {
+            skill.setDescription(description);
         }
 
         if(status != null && status >= 0 && !Objects.equals(skill.getStatus(), status)) {

@@ -48,7 +48,7 @@ public class Skill {
     private String name;
 
     @Column(nullable = false)
-    private String desciption;
+    private String description;
 
     @Column(columnDefinition="tinyint(1) default 0")
     private Integer status;
@@ -60,10 +60,10 @@ public class Skill {
     private ZonedDateTime updateAt;
 
     public Skill(String name,
-                 String desciption,
+                 String description,
                  Integer status) {
         this.name = name;
-        this.desciption = desciption;
+        this.description = description;
         this.status = status;
     }
 }
