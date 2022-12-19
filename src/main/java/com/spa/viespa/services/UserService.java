@@ -1,5 +1,6 @@
 package com.spa.viespa.services;
 
+import com.spa.viespa.entities.ConfirmationToken;
 import com.spa.viespa.entities.User;
 import com.spa.viespa.repositories.UserRepository;
 import lombok.AllArgsConstructor;
@@ -9,6 +10,9 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+import java.util.UUID;
+
 
 @Service
 @AllArgsConstructor
@@ -16,6 +20,7 @@ public class UserService implements UserDetailsService {
 
     private final UserRepository userRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
+    private final ConfirmationTokenService confirmationTokenService;
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         return userRepository.findByEmail(email)
@@ -35,8 +40,20 @@ public class UserService implements UserDetailsService {
 
         userRepository.save(user);
 
-        //TODO: send confirmation token
+        String token = UUID.randomUUID().toString();
 
-        return "success";
+        ConfirmationToken confirmationToken = new ConfirmationToken(
+                token,
+                LocalDateTime.now(),
+                LocalDateTime.now().plusHours(2),
+                user
+        );
+        confirmationTokenService.saveConfirmationToken(confirmationToken);
+
+        return token;
+    }
+
+    public int enableUser(String email) {
+        return userRepository.enableUser(email);
     }
 }
