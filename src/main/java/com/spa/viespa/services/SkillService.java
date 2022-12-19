@@ -70,7 +70,7 @@ public class SkillService {
 
         if(exists) {
             Skill skill = skillRepository
-                    .findSkillById(id)
+                    .findById(id)
                     .orElseThrow(() -> new IllegalStateException("Skill with ID: ["+ id +"] does not exist"));
             skill.setActive(!skill.isActive());
             skillRepository.save(skill);
@@ -100,7 +100,7 @@ public class SkillService {
             skill.setName(name);
         }
 
-        if(description != null && description.length() > 0 && !Objects.equals(skill.getDescription(), name)) {
+        if(description != null && description.length() > 0 && !Objects.equals(skill.getDescription(), description)) {
             skill.setDescription(description);
         }
 

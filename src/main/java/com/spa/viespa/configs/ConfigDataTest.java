@@ -6,9 +6,11 @@
 
 package com.spa.viespa.configs;
 
+import com.spa.viespa.entities.Course;
 import com.spa.viespa.entities.ServiceBundle;
 import com.spa.viespa.entities.Skill;
 import com.spa.viespa.entities.Staff;
+import com.spa.viespa.repositories.CourseRepository;
 import com.spa.viespa.repositories.ServiceBundleRepository;
 import com.spa.viespa.repositories.SkillRepository;
 import com.spa.viespa.repositories.StaffRepository;
@@ -27,7 +29,8 @@ public class ConfigDataTest {
     CommandLineRunner mappingDemo(
             SkillRepository skillRepository,
             StaffRepository staffRepository,
-            ServiceBundleRepository serviceBundleRepository){
+            ServiceBundleRepository serviceBundleRepository,
+            CourseRepository courseRepository){
         return args -> {
             //Add Skill Data Demo
             Skill skill1 = new Skill(
@@ -76,25 +79,43 @@ public class ConfigDataTest {
             //----------------------------------------------
 
             //Add Service Data Demo
-
             ServiceBundle service1 = new ServiceBundle(
-                    "service1",
-                    "Description for service1"
+                    "Service 1",
+                    "Description for Service 1"
             );
-            service1.setSkills(Set.of(skill1,skill2));
+            service1.setJoinSkills(Set.of(skill1,skill2));
             ServiceBundle service2 = new ServiceBundle(
-                    "service2",
-                    "Description for service2"
+                    "Service 2",
+                    "Description for Service 2"
             );
-            service2.setSkills(Set.of(skill2, skill3));
+            service2.setJoinSkills(Set.of(skill2, skill3));
             ServiceBundle service3 = new ServiceBundle(
-                    "service3",
-                    "Description for service3"
+                    "Service 3",
+                    "Description for Service 3"
             );
-            service3.setSkills(Set.of(skill3));
+            service3.setJoinSkills(Set.of(skill3));
             
             serviceBundleRepository.saveAll(List.of(service1,service2,service3));
+            //----------------------------------------------
 
+            //Add Course Data Demo
+            Course course1 = new Course(
+                    "Course 1",
+                    "Description for Course 1",
+                    499.00
+            );
+            Course course2 = new Course(
+                    "Course 2",
+                    "Description for Course 2",
+                    699.00
+            );
+            Course course3 = new Course(
+                    "Course 3",
+                    "Description for Course 3",
+                    899.00
+            );
+
+            courseRepository.saveAll((List.of(course1, course2, course3)));
         };
     }
 }

@@ -100,7 +100,7 @@ public class ServiceBundleService {
             service.setName(name);
         }
 
-        if(description != null && description.length() > 0 && !Objects.equals(service.getDescription(), name)) {
+        if(description != null && description.length() > 0 && !Objects.equals(service.getDescription(), description)) {
             service.setDescription(description);
         }
 

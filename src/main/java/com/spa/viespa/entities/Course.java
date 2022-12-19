@@ -6,32 +6,39 @@
 
 package com.spa.viespa.entities;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
 import java.time.ZonedDateTime;
-import java.util.Set;
 
-@Getter
 @Setter
+@Getter
 @AllArgsConstructor
 @NoArgsConstructor
-@ToString
 
 @Entity
 @Table
-public class ServiceBundle {
+public class Course {
     @Id
     @SequenceGenerator(
-            name = "service_sequence",
-            sequenceName = "service_sequence",
+            name = "course_sequence",
+            sequenceName = "course_sequence",
             allocationSize = 1
     )
-    @GeneratedValue (
+    @GeneratedValue(
             strategy = GenerationType.SEQUENCE,
-            generator = "service_generator"
+            generator = "course_generator"
     )
     private Long id;
 
@@ -41,6 +48,9 @@ public class ServiceBundle {
     @Column(nullable = false)
     private String description;
 
+    @Column(nullable = false)
+    private Double price;
+
     private boolean active = true;
 
     @CreationTimestamp
@@ -49,17 +59,11 @@ public class ServiceBundle {
     @UpdateTimestamp
     private ZonedDateTime updateAt;
 
-    @ManyToMany
-    @JoinTable(
-            name = "service_skills",
-            joinColumns = @JoinColumn(name = "service_id"),
-            inverseJoinColumns = @JoinColumn(name = "skill_id")
-    )
-    private Set<Skill> joinSkills;
-
-    public ServiceBundle(String name,
-                         String description) {
+    public Course(String name,
+                  String description,
+                  Double price) {
         this.name = name;
         this.description = description;
+        this.price = price;
     }
 }
