@@ -50,9 +50,8 @@ public class SkillController {
     public ResponseEntity<ResponseObject> updateSkill(
             @PathVariable("skillId") Long id,
             @RequestParam(required = false) String name,
-            @RequestParam(required = false) String description,
-            @RequestParam(required = false) Integer status) {
-        return skillService.updateSkill(id, name, description, status);
+            @RequestParam(required = false) String description) {
+        return skillService.updateSkill(id, name, description);
     }
 
 }

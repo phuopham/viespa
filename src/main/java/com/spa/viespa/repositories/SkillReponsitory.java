@@ -13,7 +13,7 @@ import org.springframework.data.jpa.repository.Query;
 import java.util.Optional;
 
 public interface SkillReponsitory extends JpaRepository<Skill, Long> {
-    @Query("SELECT it FROM Skill it WHERE it.name = ?1")
+    @Query("SELECT it FROM Skill it WHERE it.name = ?1 AND it.active = true")
     Optional<Skill> findSkillByName(String name);
 
     @Query("SELECT it FROM Skill it WHERE it.id = ?1")

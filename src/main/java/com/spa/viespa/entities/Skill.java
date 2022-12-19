@@ -50,8 +50,7 @@ public class Skill {
     @Column(nullable = false)
     private String description;
 
-    @Column(columnDefinition="tinyint(1) default 0")
-    private Integer status;
+    private boolean active = true;
 
     @CreationTimestamp
     private ZonedDateTime createAt;
@@ -60,10 +59,8 @@ public class Skill {
     private ZonedDateTime updateAt;
 
     public Skill(String name,
-                 String description,
-                 Integer status) {
+                 String description) {
         this.name = name;
         this.description = description;
-        this.status = status;
     }
 }

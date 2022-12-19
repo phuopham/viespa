@@ -6,6 +6,7 @@
 
 package com.spa.viespa.services;
 
+import com.spa.viespa.entities.ResponseMessage;
 import com.spa.viespa.entities.ResponseObject;
 import com.spa.viespa.entities.Skill;
 import com.spa.viespa.repositories.SkillReponsitory;
@@ -29,32 +30,38 @@ public class SkillService {
         this.skillReponsitory = skillReponsitory;
     }
 
+    //Error Message
+    public ResponseEntity<ResponseObject> responseSuccess(String msg, Object data) {
+        return ResponseEntity.status(HttpStatus.OK).body(
+                new ResponseObject(msg, data)
+        );
+    }
+
+    //Success Message
+    public ResponseEntity<ResponseObject> responseError(String msg) {
+        return ResponseEntity.status(HttpStatus.OK).body(
+                new ResponseObject(ResponseMessage.ERROR, msg)
+        );
+    }
+
     //Get All Data in Skill Table
     public ResponseEntity<ResponseObject> getSkills() {
         List<Skill> all = skillReponsitory.findAll();
         return all.isEmpty() ?
-                ResponseEntity.status(HttpStatus.NOT_FOUND).body(
-                        new ResponseObject("error", "Data not found", "")
-                ) :
-                ResponseEntity.status(HttpStatus.OK).body(
-                        new ResponseObject("success", "Data of skill table", all)
-                );
+                responseError("Data not found") :
+                responseSuccess("Data of skill table", all);
     }
 
     //Add New Skill
     public ResponseEntity<ResponseObject> addNewSkill(Skill skill) {
         Optional<Skill> duplicatedName = skillReponsitory.findSkillByName(skill.getName());
         if(duplicatedName.isPresent()) {
-            ResponseEntity.status(HttpStatus.NOT_FOUND).body(
-                    new ResponseObject("error", "This skill name is already existed", "")
-            );
+            responseError("This skill name is already existed");
         }
 
         //Save
         skillReponsitory.save(skill);
-        return ResponseEntity.status(HttpStatus.OK).body(
-                new ResponseObject("success", "Insert data successfully", skill)
-        );
+        return responseSuccess("Insert data successfully", skill);
     }
 
     //Delete Skill By ID
@@ -62,15 +69,15 @@ public class SkillService {
         boolean exists = skillReponsitory.existsById(id);
 
         if(exists) {
-            skillReponsitory.deleteById(id);
-            return ResponseEntity.status(HttpStatus.OK).body(
-                    new ResponseObject("success", "Delete data successfully", "")
-            );
+            Skill skill = skillReponsitory
+                    .findSkillById(id)
+                    .orElseThrow(() -> new IllegalStateException("Skill with ID: ["+ id +"] does not exist"));
+            skill.setActive(!skill.isActive());
+            skillReponsitory.save(skill);
+            return responseSuccess("Delete data successfully", "");
         }
 
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(
-                new ResponseObject("error", "Skill with ID: [" + id + "] does not exist", "")
-        );
+        return responseError("Skill with ID: [" + id + "] does not exist");
     }
 
 
@@ -78,8 +85,7 @@ public class SkillService {
     @Transactional
     public ResponseEntity<ResponseObject> updateSkill(Long id,
                             String name,
-                            String description,
-                            Integer status) {
+                            String description) {
         Skill skill = skillReponsitory
                 .findById(id)
                 .orElseThrow(() -> new IllegalStateException("Skill with ID: ["+ id +"] does not exist"));
@@ -87,9 +93,7 @@ public class SkillService {
         Optional<Skill> duplicatedName = skillReponsitory.findSkillByName(name);
 
         if(duplicatedName.isPresent()) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(
-                    new ResponseObject("error", "This skill name is already existed", "")
-            );
+            return responseError("This skill name is already existed");
         }
 
         if(name != null && name.length() > 0 && !Objects.equals(skill.getName(), name)) {
@@ -100,12 +104,6 @@ public class SkillService {
             skill.setDescription(description);
         }
 
-        if(status != null && status >= 0 && !Objects.equals(skill.getStatus(), status)) {
-            skill.setStatus(status);
-        }
-
-        return ResponseEntity.status(HttpStatus.OK).body(
-                new ResponseObject("success", "Update data successfully", "")
-        );
+        return responseSuccess("Update data successfully", "");
     }
 }

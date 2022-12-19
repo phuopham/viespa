@@ -29,18 +29,15 @@ public class ConfigDataTest {
             //Add Skill Data Demo
             Skill skill1 = new Skill(
                     "Level 1",
-                    "Require for beginner employee with working time period lower than 100 hours",
-                    0
+                    "Require for beginner employee with working time period lower than 100 hours"
             );
             Skill skill2 = new Skill(
                     "Level 2",
-                    "Require for intermadiate employee with working time priod from 100 to 500 hours",
-                    0
+                    "Require for intermadiate employee with working time priod from 100 to 500 hours"
             );
             Skill skill3 = new Skill(
                     "Level 3",
-                    "Require for professional employee with working time priod from 500 to 2000 hours",
-                    0
+                    "Require for professional employee with working time priod from 500 to 2000 hours"
             );
             skillReponsitory.saveAll(List.of(skill1, skill2, skill3));
             //-------------------------------------------------
@@ -56,7 +53,7 @@ public class ConfigDataTest {
                     LocalDate.of(2022, Month.DECEMBER, 2),
                     null
             );
-            staff1.setSkillSet(Set.of(
+            staff1.setSkills(Set.of(
                     skill1,skill2
             ));
             Staff staff2 = new Staff(
@@ -69,7 +66,7 @@ public class ConfigDataTest {
                     LocalDate.of(2022, Month.OCTOBER, 30),
                     null
             );
-            staff2.setSkillSet(Set.of(
+            staff2.setSkills(Set.of(
                     skill2,skill3
             ));
             staffRepository.saveAll(List.of(staff1, staff2));

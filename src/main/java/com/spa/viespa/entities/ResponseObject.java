@@ -17,7 +17,19 @@ import lombok.Setter;
 @NoArgsConstructor
 
 public class ResponseObject {
-    private String status;
+    private ResponseMessage status = ResponseMessage.SUCCESS;
     private String message;
     private Object data;
+
+    public ResponseObject(String message, Object data) {
+        this.message = message;
+        this.data = data;
+    }
+
+    public ResponseObject(ResponseMessage status, String message) {
+        this.status = status;
+        this.message = message;
+    }
 }
+
+
