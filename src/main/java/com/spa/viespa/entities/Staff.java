@@ -69,7 +69,7 @@ public class Staff {
             joinColumns = @JoinColumn(name = "staff_id"),
             inverseJoinColumns = @JoinColumn(name = "skill_id")
     )
-    private Set<Skill> skills;
+    private Set<Skill> joinSkills;
 
     public Staff(String name,
                  LocalDate dob,

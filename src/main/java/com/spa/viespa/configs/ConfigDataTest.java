@@ -53,7 +53,7 @@ public class ConfigDataTest {
                     LocalDate.of(2022, Month.DECEMBER, 2),
                     null
             );
-            staff1.setSkills(Set.of(
+            staff1.setJoinSkills(Set.of(
                     skill1,skill2
             ));
             Staff staff2 = new Staff(
@@ -66,7 +66,7 @@ public class ConfigDataTest {
                     LocalDate.of(2022, Month.OCTOBER, 30),
                     null
             );
-            staff2.setSkills(Set.of(
+            staff2.setJoinSkills(Set.of(
                     skill2,skill3
             ));
             staffRepository.saveAll(List.of(staff1, staff2));
