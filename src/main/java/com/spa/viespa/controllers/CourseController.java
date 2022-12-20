@@ -32,7 +32,7 @@ public class CourseController {
     }
 
     @GetMapping
-    public ResponseEntity<ResponseObject> getSkills(){
+    public ResponseEntity<ResponseObject> getCourses(){
         return courseService.getCourses();
     }
 
