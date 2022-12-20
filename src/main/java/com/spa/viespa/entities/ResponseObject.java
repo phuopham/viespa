@@ -10,6 +10,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 
 @Setter
 @Getter
@@ -29,6 +31,14 @@ public class ResponseObject {
     public ResponseObject(ResponseMessage status, String message) {
         this.status = status;
         this.message = message;
+    }
+
+    public ResponseEntity<ResponseObject> response(String message, Object data){
+        return ResponseEntity.status(HttpStatus.OK).body( new ResponseObject(message, data));
+    }
+
+    public ResponseEntity<ResponseObject> response(ResponseMessage status, String message){
+        return ResponseEntity.status(HttpStatus.OK).body( new ResponseObject(status,message));
     }
 }
 

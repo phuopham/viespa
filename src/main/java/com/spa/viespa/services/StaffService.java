@@ -20,56 +20,38 @@ import java.util.Optional;
 public class StaffService {
 
     private final StaffRepository staffRepository;
-
     @Autowired
     public StaffService(StaffRepository staffRepository) {
         this.staffRepository = staffRepository;
     }
 
-    //Error Message
-    public ResponseEntity<ResponseObject> responseSuccess(String msg, Object data) {
-        return ResponseEntity.status(HttpStatus.OK).body(
-                new ResponseObject(msg, data)
-        );
-    }
-
-    //Success Message
-    public ResponseEntity<ResponseObject> responseError(String msg) {
-        return ResponseEntity.status(HttpStatus.OK).body(
-                new ResponseObject(ResponseMessage.ERROR, msg)
-        );
-    }
-
     //Get All Data in Staff Table
     public ResponseEntity<ResponseObject> getStaffs() {
         List<Staff> all = staffRepository.findAll();
-        return all.isEmpty() ?
-                responseError("Data not found") :
-                responseSuccess("Data of staff table", all);
+        return all.isEmpty() ? new ResponseObject().response(ResponseMessage.ERROR, "Data not found")
+                :new ResponseObject().response("Data of staff table", all);
     }
 
     //Add New Staff
     public ResponseEntity<ResponseObject> addNewStaff(Staff staff) {
+
         //Validate
-        if(staff.getName() == null) {
-            return responseError("INVALID DATA");
-        }
+        if(staff.getName() == null) return new ResponseObject()
+                .response(ResponseMessage.ERROR, "INVALID DATA");
 
         //Check duplicated ID in table Staff
         Optional<Staff> duplicatedId = staffRepository.findStaffByIdNo(staff.getIdNo());
-        if (duplicatedId.isPresent()) {
-            return  responseError("ID: [" + staff.getIdNo() + "] number existed!");
-        }
+        if (duplicatedId.isPresent()) return new ResponseObject()
+                .response(ResponseMessage.ERROR,"ID: [" + staff.getIdNo() + "] number existed!");
 
         //Check duplicated Email in table Staff
         Optional<Staff> duplicatedEmail = staffRepository.findStaffByEmail(staff.getEmail());
-        if (duplicatedEmail.isPresent()) {
-            return  responseError("This staff email is already existed");
-        }
+        if (duplicatedEmail.isPresent()) return new ResponseObject()
+                .response(ResponseMessage.ERROR, "This staff email is already existed");
 
         //Save
         staffRepository.save(staff);
-        return  responseSuccess("Insert data successfully", staff);
+        return new ResponseObject().response("Insert data successfully", staff);
     }
 
     //Delete Staff By ID
@@ -78,10 +60,10 @@ public class StaffService {
         if (exists) {
             //Delete
             staffRepository.deleteById(id);
-            return  responseSuccess("Delete data successfully", "");
+            return new ResponseObject().response("Delete data successfully", "");
         }
 
-        return  responseError("Staff with ID: [" + id + "] does not exist");
+        return  new ResponseObject().response( ResponseMessage.ERROR,"Staff with ID: [" + id + "] does not exist");
     }
 
     //Update Staff By ID
@@ -94,44 +76,34 @@ public class StaffService {
                                                       String email,
                                                       LocalDate joinDate,
                                                       LocalDate endDate) {
-        Staff staff = staffRepository
-                .findById(id)
-                .orElseThrow(() -> new IllegalStateException("Staff with ID: [" + id + "] does not exist"));
+        Optional<Staff> staff = staffRepository.findById(id);
+        if(!staff.isPresent()) return new ResponseObject()
+                .response(ResponseMessage.ERROR,"Staff with ID: [" + id + "] does not exist"));
 
         Optional<Staff> duplicatedEmail = staffRepository.findStaffByEmail(email);
 
-        if (duplicatedEmail.isPresent()) {
-            return  responseError("This staff email is already existed");
-        }
+        if (duplicatedEmail.isPresent()) return new ResponseObject()
+                .response(ResponseMessage.ERROR,"This staff email is already existed");
 
-        if (name != null && name.length() > 0 && !Objects.equals(staff.getName(), name)) {
-            staff.setName(name);
-        }
+        Staff theStaff = staff.get();
 
-        if (dob != null && !Objects.equals(staff.getDob(), dob)) {
-            staff.setDob(dob);
-        }
+        if (name != null && name.length() > 0 && !Objects.equals(theStaff.getName(), name)) theStaff.setName(name);
 
-        if (address != null && address.length() > 0 && !Objects.equals(staff.getAddress(), address)) {
-            staff.setAddress(address);
-        }
+        if (dob != null && !Objects.equals(theStaff.getDob(), dob)) theStaff.setDob(dob);
 
-        if (phone != null && phone.length() > 0 && !Objects.equals(staff.getPhone(), phone)) {
-            staff.setAddress(phone);
-        }
+        if (address != null && address.length() > 0 && !Objects.equals(theStaff.getAddress(), address))
+            theStaff.setAddress(address);
 
-        if (email != null && email.length() > 0 && !Objects.equals(staff.getEmail(), email)) {
-            staff.setEmail(email);
-        }
+        if (phone != null && phone.length() > 0 && !Objects.equals(theStaff.getPhone(), phone))
+            theStaff.setAddress(phone);
 
-        if (joinDate != null && !Objects.equals(staff.getJoinDate(), joinDate)) {
-            staff.setJoinDate(joinDate);
-        }
+        if (email != null && email.length() > 0 && !Objects.equals(theStaff.getEmail(), email))
+            theStaff.setEmail(email);
 
-        if (!Objects.equals(staff.getEndDate(), endDate)) {
-            staff.setEndDate(endDate);
-        }
+        if (joinDate != null && !Objects.equals(theStaff.getJoinDate(), joinDate)) theStaff.setJoinDate(joinDate);
 
-        return  responseSuccess("Update data successfully", "");
+        if (!Objects.equals(theStaff.getEndDate(), endDate)) theStaff.setEndDate(endDate);
+
+        return  new ResponseObject().response("Update data successfully", "");
     }
 }
