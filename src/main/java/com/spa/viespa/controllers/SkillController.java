@@ -36,6 +36,11 @@ public class SkillController {
         return skillService.getSkills();
     }
 
+    @GetMapping(path = "{{skillId}}")
+    public ResponseEntity<ResponseObject> getSkillDetail(@PathVariable("skillId") Long id) {
+        return skillService.getSkillDetail(id);
+    }
+
     @PostMapping
     public ResponseEntity<ResponseObject> addNewSkill(@RequestBody Skill skill) {
         return skillService.addNewSkill(skill);

@@ -34,6 +34,11 @@ public class StaffController {
         return staffService.getStaffs();
     }
 
+    @GetMapping(path = "{{staffId}}")
+    public ResponseEntity<ResponseObject> getDetailStaff(@PathVariable("staffId") Long id) {
+        return staffService.getDetailStaff(id);
+    }
+
     @PostMapping
     public ResponseEntity<ResponseObject> addNewStaff(@RequestBody Staff staff) {
         return staffService.addNewStaff(staff);

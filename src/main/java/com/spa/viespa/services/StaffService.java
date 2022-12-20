@@ -32,6 +32,18 @@ public class StaffService {
                 ResponseObject.response("Data of staff table", all);
     }
 
+    //Get Detail Staff By ID
+    public ResponseEntity<ResponseObject> getDetailStaff(Long id) {
+
+        Optional<Staff> staff = staffRepository.findById(id);
+        if (staff.isEmpty()) return ResponseObject
+                .response("Staff with ID: [" + id + "] does not exist");
+
+        Staff target = staff.get();
+
+        return ResponseObject.response("Get staff [" + id + "] successfully", target);
+    }
+
     //Add New Staff
     public ResponseEntity<ResponseObject> addNewStaff(Staff staff) {
 
@@ -52,19 +64,6 @@ public class StaffService {
         //Save
         staffRepository.save(staff);
         return ResponseObject.response("Insert data successfully", staff);
-    }
-
-    //Delete Staff By ID
-    public ResponseEntity<ResponseObject> deleteStaff(Long id) {
-        boolean exists = staffRepository.existsById(id);
-
-        if (exists) {
-            //Delete
-            staffRepository.deleteById(id);
-            return ResponseObject.response("Delete data successfully", "");
-        }
-
-        return ResponseObject.response("Staff with ID: [" + id + "] does not exist");
     }
 
     //Update Staff By ID

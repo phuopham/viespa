@@ -36,6 +36,18 @@ public class SkillService {
                 ResponseObject.response("Data of skill table", all);
     }
 
+    //Get Detail Skill By ID
+    public ResponseEntity<ResponseObject> getSkillDetail(Long id) {
+
+        Optional<Skill> skill = skillRepository.findById(id);
+        if (skill.isEmpty()) return ResponseObject
+                .response("Skill with ID: [" + id + "] does not exist");
+
+        Skill target = skill.get();
+
+        return ResponseObject.response("Get skill [" + id + "] successfully", target);
+    }
+
     //Add New Skill
     public ResponseEntity<ResponseObject> addNewSkill(Skill skill) {
         Optional<Skill> duplicatedName = skillRepository.findSkillByName(skill.getName());
