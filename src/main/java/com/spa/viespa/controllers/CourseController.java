@@ -41,6 +41,11 @@ public class CourseController {
         return courseService.addNewCourse(course);
     }
 
+    @GetMapping(path = "{courseId}")
+    public ResponseEntity<ResponseObject> getDetailCourse(@PathVariable("courseId") Long id) {
+        return courseService.getDetailCourse(id);
+    }
+
     @DeleteMapping(path = "{courseId}")
     public ResponseEntity<ResponseObject> deleteCourse(@PathVariable("courseId") Long id) {
         return courseService.deleteCourse(id);

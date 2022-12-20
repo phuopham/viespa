@@ -28,9 +28,14 @@ public class ServiceBundleController {
         return service.getServiceBundles();
     }
 
+    @GetMapping(path = "{serviceId}")
+    public ResponseEntity<ResponseObject> getDetailService(@PathVariable("serviceId") Long id) {
+        return service.getDetailService(id);
+    }
+
     @PostMapping
     public ResponseEntity<ResponseObject> addNewService(@RequestBody ServiceBundle serviceBundle) {
-        return service.addNewSkill(serviceBundle);
+        return service.addNewService(serviceBundle);
     }
 
     @DeleteMapping(path = "{serviceId}")
