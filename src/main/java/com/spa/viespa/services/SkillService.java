@@ -6,12 +6,10 @@
 
 package com.spa.viespa.services;
 
-import com.spa.viespa.entities.ResponseMessage;
 import com.spa.viespa.entities.ResponseObject;
 import com.spa.viespa.entities.Skill;
 import com.spa.viespa.repositories.SkillRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -30,80 +28,66 @@ public class SkillService {
         this.skillRepository = skillRepository;
     }
 
-    //Error Message
-    public ResponseEntity<ResponseObject> responseSuccess(String msg, Object data) {
-        return ResponseEntity.status(HttpStatus.OK).body(
-                new ResponseObject(msg, data)
-        );
-    }
-
-    //Success Message
-    public ResponseEntity<ResponseObject> responseError(String msg) {
-        return ResponseEntity.status(HttpStatus.OK).body(
-                new ResponseObject(ResponseMessage.ERROR, msg)
-        );
-    }
-
     //Get All Data in Skill Table
     public ResponseEntity<ResponseObject> getSkills() {
         List<Skill> all = skillRepository.findAll();
         return all.isEmpty() ?
-                responseError("Data not found") :
-                responseSuccess("Data of skill table", all);
+                ResponseObject.response("Data not found") :
+                ResponseObject.response("Data of skill table", all);
     }
 
     //Add New Skill
     public ResponseEntity<ResponseObject> addNewSkill(Skill skill) {
         Optional<Skill> duplicatedName = skillRepository.findSkillByName(skill.getName());
-        if(duplicatedName.isPresent()) {
-            responseError("This skill name is already existed");
-        }
+        if (duplicatedName.isPresent()) return ResponseObject
+                .response("This skill name is already existed");
 
         //Save
         skillRepository.save(skill);
-        return responseSuccess("Insert data successfully", skill);
+        return ResponseObject.response("Insert data successfully", skill);
     }
 
     //Delete Skill By ID
     public ResponseEntity<ResponseObject> deleteSkill(Long id) {
-        boolean exists = skillRepository.existsById(id);
 
-        if(exists) {
-            Skill skill = skillRepository
-                    .findById(id)
-                    .orElseThrow(() -> new IllegalStateException("Skill with ID: ["+ id +"] does not exist"));
-            skill.setActive(!skill.isActive());
-            skillRepository.save(skill);
-            return responseSuccess("Delete data successfully", "");
-        }
+        Optional<Skill> skill = skillRepository.findById(id);
 
-        return responseError("Skill with ID: [" + id + "] does not exist");
+        if (skill.isEmpty()) return ResponseObject
+                .response("Skill with ID: [" + id + "] does not exist");
+
+        //Soft Delete
+        Skill target = skill.get();
+        target.setActive(!target.isActive());
+        skillRepository.save(target);
+
+        return ResponseObject.response("Delete data successfully", target);
+
     }
 
 
     //Update Skill By ID
     @Transactional
     public ResponseEntity<ResponseObject> updateSkill(Long id,
-                            String name,
-                            String description) {
-        Skill skill = skillRepository
-                .findById(id)
-                .orElseThrow(() -> new IllegalStateException("Skill with ID: ["+ id +"] does not exist"));
+                                                      String name,
+                                                      String description) {
+        Optional<Skill> skill = skillRepository.findById(id);
+
+        if (skill.isEmpty()) return ResponseObject
+                .response("Skill with ID: [\"+ id +\"] does not exist");
 
         Optional<Skill> duplicatedName = skillRepository.findSkillByName(name);
 
-        if(duplicatedName.isPresent()) {
-            return responseError("This skill name is already existed");
-        }
+        if (duplicatedName.isPresent()) return ResponseObject
+                .response("This skill name is already existed");
 
-        if(name != null && name.length() > 0 && !Objects.equals(skill.getName(), name)) {
-            skill.setName(name);
-        }
+        Skill target = skill.get();
 
-        if(description != null && description.length() > 0 && !Objects.equals(skill.getDescription(), description)) {
-            skill.setDescription(description);
-        }
+        if (name != null && name.length() > 0 && !Objects.equals(target.getName(), name))
+            target.setName(name);
 
-        return responseSuccess("Update data successfully", "");
+        if (description != null && description.length() > 0 && !Objects.equals(target.getDescription(), description))
+            target.setDescription(description);
+
+        return ResponseObject.response("Update data successfully", target);
     }
 }

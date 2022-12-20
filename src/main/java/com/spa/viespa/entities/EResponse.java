@@ -1,6 +1,6 @@
 package com.spa.viespa.entities;
 
-public enum ResponseMessage {
+public enum EResponse {
     SUCCESS,
     ERROR
 }

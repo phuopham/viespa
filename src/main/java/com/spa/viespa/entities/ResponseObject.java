@@ -19,7 +19,7 @@ import org.springframework.http.ResponseEntity;
 @NoArgsConstructor
 
 public class ResponseObject {
-    private ResponseMessage status = ResponseMessage.SUCCESS;
+    private EResponse status = EResponse.SUCCESS;
     private String message;
     private Object data;
 
@@ -28,17 +28,17 @@ public class ResponseObject {
         this.data = data;
     }
 
-    public ResponseObject(ResponseMessage status, String message) {
+    public ResponseObject(EResponse status, String message) {
         this.status = status;
         this.message = message;
     }
 
-    public static ResponseEntity<ResponseObject> response(String message, Object data){
-        return ResponseEntity.status(HttpStatus.OK).body( new ResponseObject(message, data));
+    public static ResponseEntity<ResponseObject> response(String message, Object data) {
+        return ResponseEntity.status(HttpStatus.OK).body(new ResponseObject(message, data));
     }
 
-    public static ResponseEntity<ResponseObject> response(ResponseMessage status, String message){
-        return ResponseEntity.status(HttpStatus.OK).body( new ResponseObject(status,message));
+    public static ResponseEntity<ResponseObject> response(String message) {
+        return ResponseEntity.status(HttpStatus.OK).body(new ResponseObject(EResponse.ERROR, message, ""));
     }
 }
 
