@@ -18,9 +18,13 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import java.time.ZonedDateTime;
+import java.util.Set;
 
 @Setter
 @Getter
@@ -58,6 +62,14 @@ public class Course {
 
     @UpdateTimestamp
     private ZonedDateTime updateAt;
+
+    @ManyToMany
+    @JoinTable(
+            name = "course_services",
+            joinColumns = @JoinColumn(name = "course_id"),
+            inverseJoinColumns = @JoinColumn(name = "service_id")
+    )
+    private Set<ServiceBundle> joinServices;
 
     public Course(String name,
                   String description,
