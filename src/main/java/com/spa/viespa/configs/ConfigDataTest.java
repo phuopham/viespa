@@ -6,12 +6,24 @@
 
 package com.spa.viespa.configs;
 
-import com.spa.viespa.entities.*;
-import com.spa.viespa.repositories.*;
+import com.spa.viespa.entities.Course;
+import com.spa.viespa.entities.Customer;
+import com.spa.viespa.entities.ERole;
+import com.spa.viespa.entities.Role;
+import com.spa.viespa.entities.ServiceBundle;
+import com.spa.viespa.entities.Skill;
+import com.spa.viespa.entities.Staff;
+import com.spa.viespa.entities.User;
+import com.spa.viespa.repositories.CourseRepository;
+import com.spa.viespa.repositories.CustomerRepository;
+import com.spa.viespa.repositories.RoleRepository;
+import com.spa.viespa.repositories.ServiceBundleRepository;
+import com.spa.viespa.repositories.SkillRepository;
+import com.spa.viespa.repositories.StaffRepository;
+import com.spa.viespa.repositories.UserRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.time.LocalDate;
 import java.time.Month;
@@ -32,11 +44,36 @@ public class ConfigDataTest {
 
     @Bean
     CommandLineRunner mappingDemo(
+            CustomerRepository customerRepository,
             SkillRepository skillRepository,
             StaffRepository staffRepository,
             ServiceBundleRepository serviceBundleRepository,
             CourseRepository courseRepository){
         return args -> {
+            //Add Customer Data Demo
+            Customer customer1 = new Customer(
+                    "Nam Kon 2K",
+                    "123 Paris - Phap - My Tho",
+                    "0124324345",
+                    "nam@vippro.vn",
+                    false
+            );
+            Customer customer2 = new Customer(
+                    "Nam K 2Kon",
+                    "35 Lao - Y - Tay Ninh",
+                    "0137897855",
+                    "namk2kon@deptrai.vn",
+                    false
+            );
+            Customer customer3 = new Customer(
+                    "= Ngan",
+                    "385 Doi Can - HN",
+                    "09235374534",
+                    "yeuanhduc@germany.com"
+            );
+            customerRepository.saveAll(List.of(customer1,customer2,customer3));
+            //-------------------------------------------------
+
             //Add Skill Data Demo
             Skill skill1 = new Skill(
                     "Level 1",
