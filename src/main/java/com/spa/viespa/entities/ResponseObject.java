@@ -33,11 +33,11 @@ public class ResponseObject {
         this.message = message;
     }
 
-    public ResponseEntity<ResponseObject> response(String message, Object data){
+    public static ResponseEntity<ResponseObject> response(String message, Object data){
         return ResponseEntity.status(HttpStatus.OK).body( new ResponseObject(message, data));
     }
 
-    public ResponseEntity<ResponseObject> response(ResponseMessage status, String message){
+    public static ResponseEntity<ResponseObject> response(ResponseMessage status, String message){
         return ResponseEntity.status(HttpStatus.OK).body( new ResponseObject(status,message));
     }
 }

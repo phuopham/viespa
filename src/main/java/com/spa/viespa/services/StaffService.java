@@ -5,7 +5,6 @@ import com.spa.viespa.entities.ResponseObject;
 import com.spa.viespa.entities.Staff;
 import com.spa.viespa.repositories.StaffRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -28,30 +27,30 @@ public class StaffService {
     //Get All Data in Staff Table
     public ResponseEntity<ResponseObject> getStaffs() {
         List<Staff> all = staffRepository.findAll();
-        return all.isEmpty() ? new ResponseObject().response(ResponseMessage.ERROR, "Data not found")
-                :new ResponseObject().response("Data of staff table", all);
+        return all.isEmpty() ? ResponseObject.response(ResponseMessage.ERROR, "Data not found")
+                : ResponseObject.response("Data of staff table", all);
     }
 
     //Add New Staff
     public ResponseEntity<ResponseObject> addNewStaff(Staff staff) {
 
         //Validate
-        if(staff.getName() == null) return new ResponseObject()
+        if(staff.getName() == null) return ResponseObject
                 .response(ResponseMessage.ERROR, "INVALID DATA");
 
         //Check duplicated ID in table Staff
         Optional<Staff> duplicatedId = staffRepository.findStaffByIdNo(staff.getIdNo());
-        if (duplicatedId.isPresent()) return new ResponseObject()
+        if (duplicatedId.isPresent()) return ResponseObject
                 .response(ResponseMessage.ERROR,"ID: [" + staff.getIdNo() + "] number existed!");
 
         //Check duplicated Email in table Staff
         Optional<Staff> duplicatedEmail = staffRepository.findStaffByEmail(staff.getEmail());
-        if (duplicatedEmail.isPresent()) return new ResponseObject()
+        if (duplicatedEmail.isPresent()) return ResponseObject
                 .response(ResponseMessage.ERROR, "This staff email is already existed");
 
         //Save
         staffRepository.save(staff);
-        return new ResponseObject().response("Insert data successfully", staff);
+        return ResponseObject.response("Insert data successfully", staff);
     }
 
     //Delete Staff By ID
@@ -60,10 +59,10 @@ public class StaffService {
         if (exists) {
             //Delete
             staffRepository.deleteById(id);
-            return new ResponseObject().response("Delete data successfully", "");
+            return ResponseObject.response("Delete data successfully", "");
         }
 
-        return  new ResponseObject().response( ResponseMessage.ERROR,"Staff with ID: [" + id + "] does not exist");
+        return  ResponseObject.response( ResponseMessage.ERROR,"Staff with ID: [" + id + "] does not exist");
     }
 
     //Update Staff By ID
@@ -77,12 +76,12 @@ public class StaffService {
                                                       LocalDate joinDate,
                                                       LocalDate endDate) {
         Optional<Staff> staff = staffRepository.findById(id);
-        if(!staff.isPresent()) return new ResponseObject()
-                .response(ResponseMessage.ERROR,"Staff with ID: [" + id + "] does not exist"));
+        if(staff.isEmpty()) return ResponseObject
+                .response(ResponseMessage.ERROR,"Staff with ID: [" + id + "] does not exist");
 
         Optional<Staff> duplicatedEmail = staffRepository.findStaffByEmail(email);
 
-        if (duplicatedEmail.isPresent()) return new ResponseObject()
+        if (duplicatedEmail.isPresent()) return ResponseObject
                 .response(ResponseMessage.ERROR,"This staff email is already existed");
 
         Staff theStaff = staff.get();
@@ -104,6 +103,6 @@ public class StaffService {
 
         if (!Objects.equals(theStaff.getEndDate(), endDate)) theStaff.setEndDate(endDate);
 
-        return  new ResponseObject().response("Update data successfully", "");
+        return  ResponseObject.response("Update data successfully", "");
     }
 }
