@@ -1,19 +1,12 @@
 package com.spa.viespa.controllers;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
-
-import javax.validation.Valid;
-
 import com.spa.viespa.entities.ERole;
+import com.spa.viespa.entities.ResponseObject;
 import com.spa.viespa.entities.Role;
 import com.spa.viespa.entities.User;
 import com.spa.viespa.payload.request.LoginRequest;
 import com.spa.viespa.payload.request.SignupRequest;
 import com.spa.viespa.payload.response.JwtResponse;
-import com.spa.viespa.payload.response.MessageResponse;
 import com.spa.viespa.repositories.RoleRepository;
 import com.spa.viespa.repositories.UserRepository;
 import com.spa.viespa.security.jwt.JwtUtils;
@@ -30,6 +23,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import javax.validation.Valid;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
@@ -74,15 +73,11 @@ public class AuthController {
     @PostMapping("/signup")
     public ResponseEntity<?> registerUser(@Valid @RequestBody SignupRequest signUpRequest) {
         if (userRepository.existsByUsername(signUpRequest.getUsername())) {
-            return ResponseEntity
-                    .badRequest()
-                    .body(new MessageResponse("Error: Username is already taken!"));
+            return ResponseObject.response("Error: Username is already taken!");
         }
 
         if (userRepository.existsByEmail(signUpRequest.getEmail())) {
-            return ResponseEntity
-                    .badRequest()
-                    .body(new MessageResponse("Error: Email is already in use!"));
+            return ResponseObject.response("Error: Email is already in use!");
         }
 
         // Create new user's account
@@ -123,6 +118,6 @@ public class AuthController {
         user.setRoles(roles);
         userRepository.save(user);
 
-        return ResponseEntity.ok(new MessageResponse("User registered successfully!"));
+        return ResponseObject.response("User registered successfully!");
     }
 }
