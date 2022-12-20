@@ -1,7 +1,6 @@
 package com.spa.viespa.services;
 
 import com.spa.viespa.entities.Customer;
-import com.spa.viespa.entities.ResponseMessage;
 import com.spa.viespa.entities.ResponseObject;
 import com.spa.viespa.repositories.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +17,7 @@ import java.util.Optional;
 public class CustomerService {
 
     private final CustomerRepository customerRepository;
+
     @Autowired
     public CustomerService(CustomerRepository customerRepository) {
         this.customerRepository = customerRepository;
@@ -26,7 +26,7 @@ public class CustomerService {
     //Get All Data in Customer Table
     public ResponseEntity<ResponseObject> getCustomers() {
         List<Customer> all = customerRepository.findAll();
-        return all.isEmpty() ? ResponseObject.response(ResponseMessage.ERROR, "Data not found")
+        return all.isEmpty() ? ResponseObject.response("Data not found")
                 : ResponseObject.response("Data of customer table", all);
     }
 
@@ -34,18 +34,18 @@ public class CustomerService {
     public ResponseEntity<ResponseObject> addNewCustomer(Customer customer) {
 
         //Validate
-        if(customer.getName() == null) return ResponseObject
-                .response(ResponseMessage.ERROR, "INVALID DATA");
+        if (customer.getName() == null) return ResponseObject
+                .response("INVALID DATA");
 
         //Check duplicated phone number in table Customer
         Optional<Customer> duplicatedPhone = customerRepository.findCustomerByPhone(customer.getPhone());
         if (duplicatedPhone.isPresent()) return ResponseObject
-                .response(ResponseMessage.ERROR,"Phone: [" + customer.getPhone() + "] already existed!");
+                .response("Phone: [" + customer.getPhone() + "] already existed!");
 
         //Check duplicated Email in table Customer
         Optional<Customer> duplicatedEmail = customerRepository.findCustomerByEmail(customer.getEmail());
         if (duplicatedEmail.isPresent()) return ResponseObject
-                .response(ResponseMessage.ERROR, "This customer email is already existed");
+                .response("This customer email is already existed");
 
         //Save
         customerRepository.save(customer);
@@ -61,7 +61,7 @@ public class CustomerService {
             return ResponseObject.response("Delete data successfully", "");
         }
 
-        return  ResponseObject.response( ResponseMessage.ERROR,"Customer with ID: [" + id + "] does not exist");
+        return ResponseObject.response("Customer with ID: [" + id + "] does not exist");
     }
 
     //Update Customer By ID
@@ -69,13 +69,13 @@ public class CustomerService {
     public ResponseEntity<ResponseObject> updateCustomer(
             Long id, String name, String address, String phone, String email, boolean isFemale) {
         Optional<Customer> customer = customerRepository.findById(id);
-        if(customer.isEmpty()) return ResponseObject
-                .response(String.valueOf(ResponseMessage.ERROR),"Customer with ID: [" + id + "] does not exist");
+        if (customer.isEmpty()) return ResponseObject
+                .response("Customer with ID: [" + id + "] does not exist");
 
         Optional<Customer> duplicatedEmail = customerRepository.findCustomerByEmail(email);
 
         if (duplicatedEmail.isPresent()) return ResponseObject
-                .response(ResponseMessage.ERROR,"This customer email is already existed");
+                .response("This customer email is already existed");
 
         Customer target = customer.get();
 
@@ -89,9 +89,9 @@ public class CustomerService {
 
         if (address != null && address.length() > 0 && !Objects.equals(target.getAddress(), address))
             target.setAddress(address);
-        if(!Objects.equals(target.getIsFemale(), isFemale))target.setIsFemale(!target.getIsFemale());
+        if (!Objects.equals(target.getIsFemale(), isFemale)) target.setIsFemale(!target.getIsFemale());
 
 
-        return  ResponseObject.response("Update data successfully", "");
+        return ResponseObject.response("Update data successfully", "");
     }
 }
