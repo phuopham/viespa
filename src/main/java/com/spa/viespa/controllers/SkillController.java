@@ -36,7 +36,7 @@ public class SkillController {
         return skillService.getSkills();
     }
 
-    @GetMapping(path = "{{skillId}}")
+    @GetMapping(path = "{skillId}")
     public ResponseEntity<ResponseObject> getSkillDetail(@PathVariable("skillId") Long id) {
         return skillService.getSkillDetail(id);
     }

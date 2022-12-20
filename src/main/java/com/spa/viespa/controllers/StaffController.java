@@ -34,7 +34,7 @@ public class StaffController {
         return staffService.getStaffs();
     }
 
-    @GetMapping(path = "{{staffId}}")
+    @GetMapping(path = "{staffId}")
     public ResponseEntity<ResponseObject> getDetailStaff(@PathVariable("staffId") Long id) {
         return staffService.getDetailStaff(id);
     }
