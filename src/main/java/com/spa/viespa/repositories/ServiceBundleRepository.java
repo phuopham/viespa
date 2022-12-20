@@ -17,9 +17,6 @@ public interface ServiceBundleRepository extends JpaRepository<ServiceBundle, Lo
     @Query("SELECT it FROM ServiceBundle it WHERE it.name = ?1 AND it.active = true")
     Optional<ServiceBundle> findServiceByName(String name);
 
-    @Query("SELECT it FROM ServiceBundle it WHERE it.id = ?1")
-    Optional<ServiceBundle> findServiceById(Long id);
-
     @Query("SELECT it FROM Skill it WHERE it.id = ?1")
     Optional<Skill> findSkillById(Long id);
 }
