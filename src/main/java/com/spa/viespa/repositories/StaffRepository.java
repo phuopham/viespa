@@ -18,5 +18,5 @@ public interface StaffRepository extends JpaRepository<Staff, Long> {
     Optional<Staff> findStaffByEmail(String email);
 
     @Query("SELECT it FROM Skill it WHERE it.id =?1")
-    Optional<Skill> findSkillById(int skill);
+    Optional<Skill> findSkillById(Long skill);
 }

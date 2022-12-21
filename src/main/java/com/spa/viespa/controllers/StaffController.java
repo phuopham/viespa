@@ -41,7 +41,7 @@ public class StaffController {
     }
 
     @PostMapping
-    public ResponseEntity<ResponseObject> addNewStaff(@RequestBody Staff<Set<Integer>> staff) {
+    public ResponseEntity<ResponseObject> addNewStaff(@RequestBody Staff<Set<Long>> staff) {
         return staffService.addNewStaff(staff);
     }
 

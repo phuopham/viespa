@@ -33,8 +33,6 @@ public class Staff<T> {
             generator = "staff_generator"
     )
     private Long id;
-    @Transient
-    private T param;
 
     @Column(nullable = false)
     private String name;
@@ -65,6 +63,8 @@ public class Staff<T> {
     @UpdateTimestamp
     private ZonedDateTime updateAt;
 
+    @Transient
+    private T param;
     @ManyToMany
     @JoinTable(
             name = "staff_skills",

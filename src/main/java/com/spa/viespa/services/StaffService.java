@@ -47,7 +47,7 @@ public class StaffService {
     }
 
     //Add New Staff
-    public ResponseEntity<ResponseObject> addNewStaff(Staff<Set<Integer>> staff) {
+    public ResponseEntity<ResponseObject> addNewStaff(Staff<Set<Long>> staff) {
 
         //Validate
         if (staff.getName() == null) return ResponseObject
