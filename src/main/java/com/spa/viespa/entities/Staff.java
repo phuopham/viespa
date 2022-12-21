@@ -21,7 +21,7 @@ import java.util.Set;
 
 @Entity
 @Table
-public class Staff<t> {
+public class Staff<T> {
     @Id
     @SequenceGenerator(
             name = "staff_sequence",
@@ -33,7 +33,8 @@ public class Staff<t> {
             generator = "staff_generator"
     )
     private Long id;
-    private Object t;
+    @Transient
+    private T o;
 
     @Column(nullable = false)
     private String name;
