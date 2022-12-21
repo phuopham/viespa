@@ -34,7 +34,7 @@ public class Staff<T> {
     )
     private Long id;
     @Transient
-    private T o;
+    private T param;
 
     @Column(nullable = false)
     private String name;
