@@ -36,8 +36,19 @@ public class ServiceBundleService {
                 ResponseObject.response("Data of service table", all);
     }
 
+    //Get Detail Service Bundle By ID
+    public ResponseEntity<ResponseObject> getDetailService(Long id) {
+        Optional<ServiceBundle> service = serviceBundleRepository.findById(id);
+        if (service.isEmpty()) return ResponseObject
+                .response("Service with ID: [" + id + "] does not exist");
+
+        ServiceBundle target = service.get();
+
+        return ResponseObject.response("Get service [" + id + "] successfully", target);
+    }
+
     //Add New Service
-    public ResponseEntity<ResponseObject> addNewSkill(ServiceBundle serviceBundle) {
+    public ResponseEntity<ResponseObject> addNewService(ServiceBundle serviceBundle) {
         Optional<ServiceBundle> duplicatedName = serviceBundleRepository.findServiceByName(serviceBundle.getName());
         if (duplicatedName.isPresent()) {
             ResponseObject.response("This service name is already existed");
@@ -64,7 +75,7 @@ public class ServiceBundleService {
     }
 
 
-    //Update Skill By ID
+    //Update Service By ID
     @Transactional
     public ResponseEntity<ResponseObject> updateServiceBundle(Long id,
                                                               String name,

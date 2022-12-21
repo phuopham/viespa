@@ -33,6 +33,11 @@ public class CustomerController {
         return customerService.getCustomers();
     }
 
+    @GetMapping(path = "{customerId}")
+    public ResponseEntity<ResponseObject> getDetailCustomer(@PathVariable("customerId") Long id) {
+        return customerService.getDetailCustomer(id);
+    }
+
     @PostMapping
     public ResponseEntity<ResponseObject> addNewCustomer(@RequestBody Customer customer) {
         return customerService.addNewCustomer(customer);

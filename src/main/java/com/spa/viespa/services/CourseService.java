@@ -28,6 +28,7 @@ public class CourseService {
         this.courseRepository = courseRepository;
     }
 
+    //Get All Course Table
     public ResponseEntity<ResponseObject> getCourses() {
         List<Course> all = courseRepository.findAll();
         return all.isEmpty() ?
@@ -35,7 +36,21 @@ public class CourseService {
                 ResponseObject.response("Data of course table", all);
     }
 
+    //Get Detail Course By ID
+    public ResponseEntity<ResponseObject> getDetailCourse(Long id) {
+
+        Optional<Course> course = courseRepository.findById(id);
+        if (course.isEmpty()) return ResponseObject
+                .response("Course with ID: [" + id + "] does not exist");
+
+        Course target = course.get();
+
+        return ResponseObject.response("Get course [" + id + "] successfully", target);
+    }
+
+    //Add New Course
     public ResponseEntity<ResponseObject> addNewCourse(Course course) {
+
         Optional<Course> duplicatedName = courseRepository.findCourseByName(course.getName());
         if(duplicatedName.isPresent()) {
             ResponseObject.response("This course name is already existed");
@@ -46,6 +61,7 @@ public class CourseService {
         return ResponseObject.response("Insert data successfully", course);
     }
 
+    //Delete Course By ID
     public ResponseEntity<ResponseObject> deleteCourse(Long id) {
 
         Optional<Course> course = courseRepository.findById(id);
@@ -61,6 +77,7 @@ public class CourseService {
         return ResponseObject.response("Delete data successfully", target);
     }
 
+    //Update Course By ID
     @Transactional
     public ResponseEntity<ResponseObject> updateCourse(Long id,
                                                        String name,

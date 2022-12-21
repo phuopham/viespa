@@ -26,8 +26,21 @@ public class CustomerService {
     //Get All Data in Customer Table
     public ResponseEntity<ResponseObject> getCustomers() {
         List<Customer> all = customerRepository.findAll();
-        return all.isEmpty() ? ResponseObject.response("Data not found")
-                : ResponseObject.response("Data of customer table", all);
+        return all.isEmpty() ?
+                ResponseObject.response("Data not found") :
+                ResponseObject.response("Data of customer table", all);
+    }
+
+    //Get Detail Customer By ID
+    public ResponseEntity<ResponseObject> getDetailCustomer(Long id) {
+
+        Optional<Customer> customer = customerRepository.findById(id);
+        if (customer.isEmpty()) return ResponseObject
+                .response("Customer with ID: [" + id + "] does not exist");
+
+        Customer target = customer.get();
+
+        return ResponseObject.response("Get customer [" + id + "] successfully", target);
     }
 
     //Add New Customer
