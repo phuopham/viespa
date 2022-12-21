@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 
 @RestController
 @RequestMapping(path="api/v1/staffs")
@@ -40,7 +41,7 @@ public class StaffController {
     }
 
     @PostMapping
-    public ResponseEntity<ResponseObject> addNewStaff(@RequestBody Staff staff) {
+    public ResponseEntity<ResponseObject> addNewStaff(@RequestBody Staff<ArrayList> staff) {
         return staffService.addNewStaff(staff);
     }
 
