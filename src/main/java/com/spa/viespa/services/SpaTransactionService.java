@@ -12,10 +12,8 @@ import com.spa.viespa.repositories.SpaTransactionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -43,38 +41,39 @@ public class SpaTransactionService {
 
         //Save
         transactionRepository.save(spaTransaction);
+
         return ResponseObject.response("Insert data successfully", spaTransaction);
     }
 
-    @Transactional
-    public ResponseEntity<ResponseObject> updateSpaTransaction(Long id,
-                                                               Long customerId,
-                                                               Long courseId,
-                                                               Double price,
-                                                               String note) {
-
-        Optional<SpaTransaction> spaTransaction = transactionRepository.findById(id);
-        if (spaTransaction.isEmpty()) return ResponseObject
-                .response("Service with ID: [" + id + "] does not exist");
-
-        SpaTransaction target = spaTransaction.get();
-
-        if (courseId!=null && !Objects.equals(target.getCourse().getId(), courseId)) {
-            target.setCourse(transactionRepository.findCourseById(courseId).get());
-        }
-
-        if (!Objects.equals(target.getCustomer().getId(), customerId)) {
-            target.setCustomer(transactionRepository.findCustomerById(customerId).get());
-        }
-
-        if (note != null && note.length() > 0 && !Objects.equals(target.getNote(), note)) {
-            target.setNote(note);
-        }
-
-        if (price != null && price > 0 && !Objects.equals(target.getPrice(), price)) {
-            target.setPrice(price);
-        }
-
-        return ResponseObject.response("Update data successfully", "");
-    }
+//    @Transactional
+//    public ResponseEntity<ResponseObject> updateSpaTransaction(Long id,
+//                                                               Long customerId,
+//                                                               Long courseId,
+//                                                               Double price,
+//                                                               String note) {
+//
+//        Optional<SpaTransaction> spaTransaction = transactionRepository.findById(id);
+//        if (spaTransaction.isEmpty()) return ResponseObject
+//                .response("Service with ID: [" + id + "] does not exist");
+//
+//        SpaTransaction target = spaTransaction.get();
+//
+//        if (courseId!=null && !Objects.equals(target.getCourse().getId(), courseId)) {
+//            target.setCourse(transactionRepository.findCourseById(courseId).get());
+//        }
+//
+//        if (!Objects.equals(target.getCustomer().getId(), customerId)) {
+//            target.setCustomer(transactionRepository.findCustomerById(customerId).get());
+//        }
+//
+//        if (note != null && note.length() > 0 && !Objects.equals(target.getNote(), note)) {
+//            target.setNote(note);
+//        }
+//
+//        if (price != null && price > 0 && !Objects.equals(target.getPrice(), price)) {
+//            target.setPrice(price);
+//        }
+//
+//        return ResponseObject.response("Update data successfully", "");
+//    }
 }
