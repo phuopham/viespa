@@ -6,15 +6,17 @@ import com.spa.viespa.entities.Staff;
 import com.spa.viespa.entities.TransactionCourseLine;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
 
+@Repository
 public interface TCLRepository extends JpaRepository<TransactionCourseLine, Long> {
 
-    @Query("SELECT it FROM Customer it WHERE it.id = ?1 AND it.active = true")
+    @Query("SELECT it FROM Customer it WHERE it.id = ?1")
     Optional<Customer> findCustomerById(Long id);
 
-    @Query("SELECT it FROM Course it WHERE it.id =?1 AND it.active = true")
+    @Query("SELECT course FROM Course course WHERE course.id =?1 AND course.active = true")
     Optional<Course> findCourseById(Long id);
 
     @Query("SELECT it FROM ServiceBundle it WHERE it.id =?1 AND it.active = true")

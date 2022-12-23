@@ -36,7 +36,7 @@ public class SpaTransactionController {
 
     @PostMapping
     public ResponseEntity<ResponseObject> addNewTransaction(@RequestBody SpaTransaction transaction) {
-        tclService.addNewTransactionCourseLine(transaction);
+        ResponseObject courseLine = tclService.addNewTransactionCourseLine(transaction);
         return transactionService.addNewSpaTransaction(transaction);
     }
 
