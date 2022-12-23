@@ -8,10 +8,13 @@ package com.spa.viespa.controllers;
 
 import com.spa.viespa.entities.ResponseObject;
 import com.spa.viespa.entities.SpaTransaction;
+import com.spa.viespa.entities.TransactionDTO;
 import com.spa.viespa.services.SpaTransactionService;
 import com.spa.viespa.services.TCLService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -35,9 +38,11 @@ public class SpaTransactionController {
     }
 
     @PostMapping
-    public ResponseEntity<ResponseObject> addNewTransaction(@RequestBody SpaTransaction transaction) {
-        ResponseObject courseLine = tclService.addNewTransactionCourseLine(transaction);
-        return transactionService.addNewSpaTransaction(transaction);
+    @Transactional
+    public ResponseEntity<ResponseObject> addNewTransaction(@RequestBody TransactionDTO transaction) {
+        SpaTransaction spaTransaction = transactionService.addNewSpaTransaction(transaction);
+        ResponseObject courseLine = tclService.addNewTransactionCourseLine(spaTransaction);
+        return ResponseEntity.status(HttpStatus.OK).body(courseLine);
     }
 
 //    @PutMapping(path = "{transactionId}")

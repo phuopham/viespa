@@ -1,0 +1,491 @@
+{
+	"info": {
+		"_postman_id": "e812026e-d68e-446b-9ba3-faba0da4c570",
+		"name": "VieSpa",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "23115181"
+	},
+	"item": [
+		{
+			"name": "Auth",
+			"item": [
+				{
+					"name": "Auth/SignUp",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"username\": \"hoangnam\",\r\n  \"email\": \"admin@gmail.com\",\r\n  \"password\": \"123456\",\r\n  \"role\": [\"admin\"]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/auth/signup",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"auth",
+								"signup"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Auth/SignIn",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"username\": \"admin\",\r\n  \"password\": \"123123\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/auth/signin",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"auth",
+								"signin"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Staff",
+			"item": [
+				{
+					"name": "API/Staff/Get/All",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTY3MTYyMjY0NywiZXhwIjoxNjcxNzA5MDQ3fQ.tMOu2aQULqgVqwPjy-grrUoE_jaxlKsKVmY6eyfqpRZSKCFbNfX_UbENKSjwgCknI1N_BFfqZXWCgPjuyRh3nw",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/v1/staffs",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"staffs"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "APT/Staff/Get/ID",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTY3MTYyMjY0NywiZXhwIjoxNjcxNzA5MDQ3fQ.tMOu2aQULqgVqwPjy-grrUoE_jaxlKsKVmY6eyfqpRZSKCFbNfX_UbENKSjwgCknI1N_BFfqZXWCgPjuyRh3nw",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/v1/staffs/2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"staffs",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "API/Staff/Update/ID",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTY3MTYyMjY0NywiZXhwIjoxNjcxNzA5MDQ3fQ.tMOu2aQULqgVqwPjy-grrUoE_jaxlKsKVmY6eyfqpRZSKCFbNfX_UbENKSjwgCknI1N_BFfqZXWCgPjuyRh3nw",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/v1/staffs/1?email=abc@github.com",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"staffs",
+								"1"
+							],
+							"query": [
+								{
+									"key": "email",
+									"value": "abc@github.com"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "API/Staff/Post/New",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTY3MTYyMjY0NywiZXhwIjoxNjcxNzA5MDQ3fQ.tMOu2aQULqgVqwPjy-grrUoE_jaxlKsKVmY6eyfqpRZSKCFbNfX_UbENKSjwgCknI1N_BFfqZXWCgPjuyRh3nw",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"name\": \"Nguyen Trong Duc\",\r\n  \"dob\": \"2001-07-16\",\r\n  \"address\": \"285 Doi Can, Ba Dinh, Ha Noi\",\r\n  \"phone\": \"0989273371\",\r\n  \"email\": \"trongduc@github.com\",\r\n  \"idNo\": 43412543524,\r\n  \"joinDate\": \"2022-12-02\",\r\n  \"endDate\": null,\r\n  \"param\": [\r\n      1,\r\n      2\r\n  ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/v1/staffs",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"staffs"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Skill",
+			"item": [
+				{
+					"name": "API/Skill/Get/All",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTY3MTYyMjY0NywiZXhwIjoxNjcxNzA5MDQ3fQ.tMOu2aQULqgVqwPjy-grrUoE_jaxlKsKVmY6eyfqpRZSKCFbNfX_UbENKSjwgCknI1N_BFfqZXWCgPjuyRh3nw",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/v1/skills",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"skills"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "API/Skill/Post/New",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTY3MTYyMjY0NywiZXhwIjoxNjcxNzA5MDQ3fQ.tMOu2aQULqgVqwPjy-grrUoE_jaxlKsKVmY6eyfqpRZSKCFbNfX_UbENKSjwgCknI1N_BFfqZXWCgPjuyRh3nw",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"name\": \"Test Add New\",\r\n  \"description\": \"Abc\"\r\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/v1/skills",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"skills"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "API/Skill/Get/ID",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTY3MTYyMjY0NywiZXhwIjoxNjcxNzA5MDQ3fQ.tMOu2aQULqgVqwPjy-grrUoE_jaxlKsKVmY6eyfqpRZSKCFbNfX_UbENKSjwgCknI1N_BFfqZXWCgPjuyRh3nw",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/v1/skills/2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"skills",
+								"2"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "ServiceBundle",
+			"item": [
+				{
+					"name": "API/Service/Get/ID",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTY3MTYyMjY0NywiZXhwIjoxNjcxNzA5MDQ3fQ.tMOu2aQULqgVqwPjy-grrUoE_jaxlKsKVmY6eyfqpRZSKCFbNfX_UbENKSjwgCknI1N_BFfqZXWCgPjuyRh3nw",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/v1/services/2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"services",
+								"2"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Course",
+			"item": [
+				{
+					"name": "API/Course/Get/ID",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTY3MTYyMjY0NywiZXhwIjoxNjcxNzA5MDQ3fQ.tMOu2aQULqgVqwPjy-grrUoE_jaxlKsKVmY6eyfqpRZSKCFbNfX_UbENKSjwgCknI1N_BFfqZXWCgPjuyRh3nw",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/v1/courses/2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"courses",
+								"2"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Customer",
+			"item": [
+				{
+					"name": "API/Customer/Get/ID",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTY3MTYyMjY0NywiZXhwIjoxNjcxNzA5MDQ3fQ.tMOu2aQULqgVqwPjy-grrUoE_jaxlKsKVmY6eyfqpRZSKCFbNfX_UbENKSjwgCknI1N_BFfqZXWCgPjuyRh3nw",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/v1/customers/2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"customers",
+								"2"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Transaction",
+			"item": [
+				{
+					"name": "API/Customer/Get",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTY3MTYyMjY0NywiZXhwIjoxNjcxNzA5MDQ3fQ.tMOu2aQULqgVqwPjy-grrUoE_jaxlKsKVmY6eyfqpRZSKCFbNfX_UbENKSjwgCknI1N_BFfqZXWCgPjuyRh3nw",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/v1/customers/2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"customers",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add transaction",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

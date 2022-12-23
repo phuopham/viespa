@@ -6,15 +6,17 @@
 
 package com.spa.viespa.services;
 
+import com.spa.viespa.entities.Course;
+import com.spa.viespa.entities.Customer;
 import com.spa.viespa.entities.ResponseObject;
 import com.spa.viespa.entities.SpaTransaction;
+import com.spa.viespa.entities.TransactionDTO;
 import com.spa.viespa.repositories.SpaTransactionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class SpaTransactionService {
@@ -33,16 +35,20 @@ public class SpaTransactionService {
                 ResponseObject.response("Data of transaction table", all);
     }
 
-    public ResponseEntity<ResponseObject> addNewSpaTransaction(SpaTransaction spaTransaction) {
-        Optional<SpaTransaction> duplicatedName = transactionRepository.findById(spaTransaction.getId());
-        if (duplicatedName.isPresent()) {
-            ResponseObject.response("Internal error. Try again");
-        }
+    public SpaTransaction addNewSpaTransaction(TransactionDTO transaction) {
 
+        Customer customer = transactionRepository.findCustomerById(transaction.getCustomerId()).orElseThrow(() -> new IllegalStateException("Error"));
+        Course course = transactionRepository.findCourseById(transaction.getCourseId()).orElseThrow(() -> new IllegalStateException("Error"));
         //Save
+        SpaTransaction spaTransaction = new SpaTransaction(
+                transaction.getNote(),
+                transaction.getPrice(),
+                customer,
+                course
+                );
         transactionRepository.save(spaTransaction);
 
-        return ResponseObject.response("Insert data successfully", spaTransaction);
+        return spaTransaction;
     }
 
 //    @Transactional

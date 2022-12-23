@@ -76,4 +76,5 @@ public class SpaTransaction {
         this.customer = customer;
         this.course = course;
     }
+
 }
