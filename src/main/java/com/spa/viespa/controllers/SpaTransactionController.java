@@ -25,6 +25,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping(path = "api/v1/transaction")
 public class SpaTransactionController {
     private final SpaTransactionService transactionService;
+
+    @Autowired
     private TCLService tclService;
 
     @Autowired
